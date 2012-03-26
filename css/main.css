@@ -1,0 +1,8 @@
+body {
+}
+.canvas_container {
+	width: 100%;
+	/*width: 1000px;*/
+	border: 1px solid #222;
+	padding: 20px;
+}
