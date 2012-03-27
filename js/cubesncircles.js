@@ -40,7 +40,7 @@ var centerY = 200;
 // }
 // paper.path(albumSalesGraph);
 
-for (var i = 5; i < 10; i+=1) {
+for (var i = 5; i < 9; i+=1) {
 	var multiplier = i*20;
 	paper.circle(centerX, centerY, 10+multiplier);
 }
@@ -59,7 +59,7 @@ var digitalSales = new Array(0,0,0,0,0,0,0,0,0,0,0.38,1.2,2.5,4.5,7,10.7,12.9,14
 var thirdSale = new Array(35,37.3,38.4,41,46,47.8,52,53.2,52,55,82,82.3,82,81,80,82,87,89);
 var maxValue = 90; // valeur maximum
 var radius = 150; // rayon du cercle
-var centerRadius = 100;
+var centerRadius = 90;
 var albumLength = albumSales.length;
 var step = Math.PI * 2 / albumLength;
 var pathString = "";
@@ -69,11 +69,12 @@ var infocirc = paper.circle(40 , 450, 20).attr({
 	fill: "#eee",
 	stroke: "1"
 });
-var infobox = paper.rect (65, 430, 100, 50, 5).attr({
-	fill:"#eee",
-	stroke:"0",
-	opacity : "0"
-});
+var infobox = paper.rect (65, 430, 100, 50, 5)
+	.attr({
+		fill:"#eee",
+		stroke:"0",
+		opacity : "0"
+	});
 
 function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCircle) {
 	var albumLength = array.length;
@@ -105,7 +106,7 @@ var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,
 var text = paper.text(120,80,"Spotify")
 	.attr({
 		"font-size":"20",
-		fill: ""
+		fill: "black"
 	});
 text.rotate(-50);
 
