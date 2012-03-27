@@ -88,32 +88,45 @@ var albumSalesPath = create_graph(albumSales,maxValue,radius,centerRadius,center
 var digitalSalesPath = create_graph(digitalSales,maxValue,radius,centerRadius,centerX,centerY);
 var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,centerY);
 
-// Albums sales style
-paper.path( albumSalesPath ).attr({
-	"stroke-width": 0,
-	"stroke": "red",
-	"fill":"red",
-	"fill-opacity": "0.3"
-});
 
+// Ajout de textes
+var text = paper.text(120,80,"Spotify")
+	.attr({
+		"font-size":"20",
+		fill: "black"
+	});
+text.rotate(-50);
+
+
+
+// ajout des styles au PATHS
 // third sales style
-paper.path( thirdSalePath ).attr({
-	"stroke-width": 4,
-	"stroke": "#00f",
-	"fill":"#00f",
-	"fill-opacity": "0.3"
-});
+paper.path( thirdSalePath )
+	.attr({
+		"stroke-width": 0,
+		fill: "150-#E22E18-#8E1A24", // rouge
+		"fill-opacity": ".75"
+	});
 
+// Albums sales style
+paper.path( albumSalesPath )
+	.attr({
+		"stroke-width": 0,
+		"fill":"150-#4F983E-#4E9D66", // green
+		"fill-opacity": ".75"
+	});
 // Digital sales style
-paper.path( digitalSalesPath ).attr({
-	"stroke-width": 0,
-	"stroke": "#0f0",
-	"fill":"#0f0",
-	"fill-opacity": "0.3"
-});
+paper.path( digitalSalesPath )
+	.attr({
+		"stroke-width": 0,
+		"fill":"150-#005A91-#0085C7", // blue
+		"fill-opacity": ".75"
+	});
 
 // remplir le cercle du centre (noir)
-paper.circle( centerX, centerY, centerRadius ).attr("fill","#000");
-
-
+paper.circle( centerX, centerY, centerRadius )
+	.attr({
+		"fill" : "#000"
+		// fill: "r#fff-#000"
+	});
 
