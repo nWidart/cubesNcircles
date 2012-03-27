@@ -66,70 +66,51 @@ var pathString = "";
 var pathString2 = "";
 var pathString3 = "";
 
+function create_graph(array,maxValue,radius,centerRadius,centerX,centerY) {
+	var albumLength = array.length;
+	var step = Math.PI * 2 / albumLength;
 
-// Albums sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = albumSales[i];
- 	if ( i == 0 ) {
- 		pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
+	for( var i = 0; i < albumLength; i++ ) {
+		var angle = -(step*i + Math.PI);
+		var sin = Math.sin(angle);
+		var cos = -Math.cos(angle);
+		var value = array[i];
+		if(i == 0) {
+			pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
+		} else {
+			pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
+		}
+	}
+	pathString += "L" + centerX + " " + centerY + "z";
+	return pathString;
 }
+var albumSalesPath = create_graph(albumSales,maxValue,radius,centerRadius,centerX,centerY);
+var digitalSalesPath = create_graph(digitalSales,maxValue,radius,centerRadius,centerX,centerY);
+var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,centerY);
 
-// Digital sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = digitalSales[i];
- 	if ( i == 0 ) {
- 		pathString2 += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString2 += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
-}
-// third sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = thirdSale[i];
- 	if ( i == 0 ) {
- 		pathString3 += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString3 += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
-}
-
-pathString += "L" + centerX + " " + centerY + "z";
-pathString2 += "L" + centerX + " " + centerY + "z";
-pathString3 += "L" + centerX + " " + centerY + "z";
-// third sales style
-paper.path( pathString3 ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#00f",
- 	"fill":"#00f",
- 	"fill-opacity": "0.3"
-});
 // Albums sales style
-paper.path( pathString ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#f00",
- 	"fill":"#f00",
- 	"fill-opacity": "0.3"
-});
-// Digital sales style
-paper.path( pathString2 ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#0f0",
- 	"fill":"#0f0",
- 	"fill-opacity": "0.3"
+paper.path( albumSalesPath ).attr({
+	"stroke-width": 0,
+	"stroke": "red",
+	"fill":"red",
+	"fill-opacity": "0.3"
 });
 
+// third sales style
+paper.path( thirdSalePath ).attr({
+	"stroke-width": 4,
+	"stroke": "#00f",
+	"fill":"#00f",
+	"fill-opacity": "0.3"
+});
+
+// Digital sales style
+paper.path( digitalSalesPath ).attr({
+	"stroke-width": 0,
+	"stroke": "#0f0",
+	"fill":"#0f0",
+	"fill-opacity": "0.3"
+});
 
 // remplir le cercle du centre (noir)
 paper.circle( centerX, centerY, centerRadius ).attr("fill","#000");
