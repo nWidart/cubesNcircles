@@ -1,4 +1,4 @@
-var paper = new Raphael(document.getElementById('canvas_container'), 1200,500);
+var paper = new Raphael(document.getElementById('canvas_container'), 1400,1000);
 // var startAxisX = 20;
 // var startAxisY = 480;
 // var x_axis = paper.path('M ' + startAxisX + ' ' + startAxisY + ' l 1000 0');
@@ -25,8 +25,8 @@ var paper = new Raphael(document.getElementById('canvas_container'), 1200,500);
 // }
 
 
-var centerX = 300;
-var centerY = 200;
+var centerX = 600;
+var centerY = 370;
 
 
 
@@ -40,13 +40,13 @@ var centerY = 200;
 // }
 // paper.path(albumSalesGraph);
 
-for (var i = 5; i < 9; i+=1) {
+for (var i = 5; i < 14; i+=1) {
 	var multiplier = i*20;
-	paper.circle(centerX, centerY, 10+multiplier);
+	paper.circle(centerX, centerY, 10+multiplier).attr({"stroke":"#eee", "stroke-opacity":".3"}).toBack();
 }
 
 for (var i = 0; i < 18; i+=1) {
-	var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier-10) );
+	var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier-10) ).attr({stroke:"#eee", "stroke-opacity":".3"}).toBack();
 	if(i>0){
 		el.rotate(i*20, centerX, centerY);
 	}
@@ -59,22 +59,13 @@ var digitalSales = new Array(0,0,0,0,0,0,0,0,0,0,0.38,1.2,2.5,4.5,7,10.7,12.9,14
 var thirdSale = new Array(35,37.3,38.4,41,46,47.8,52,53.2,52,55,82,82.3,82,81,80,82,87,89);
 var maxValue = 90; // valeur maximum
 var radius = 150; // rayon du cercle
-var centerRadius = 90;
+var centerRadius = 91;
 var albumLength = albumSales.length;
 var step = Math.PI * 2 / albumLength;
 var pathString = "";
 var pathString2 = "";
 var pathString3 = "";
-var infocirc = paper.circle(40 , 450, 20).attr({
-	fill: "#eee",
-	stroke: "1"
-});
-var infobox = paper.rect (65, 430, 100, 50, 5)
-	.attr({
-		fill:"#eee",
-		stroke:"0",
-		opacity : "0"
-	});
+
 
 function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCircle) {
 	var albumLength = array.length;
@@ -88,11 +79,16 @@ function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCirc
 		var value = array[i];
 		if(i == 0) {
 			pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
-			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 );
+			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7"});
 		} else {
 			pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
-			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 );
+			if(i != 1 && i != 3 && i != 6) {
+				if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7"});
+			}
 		}
+
+		
+		
 	}
 	pathString += "L" + centerX + " " + centerY + "z";
 	return pathString;
@@ -103,12 +99,13 @@ var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,
 
 
 // Ajout de textes
-var text = paper.text(120,80,"Spotify")
+var text = paper.text(800,40,"Call of Duty: Modern Warfare 2, was the number one selling video game of 2009.\nThe game sold 11.86 million copies in stores and through legitimate vendors.4.1\n million copies of the game was illegally pirated off of bit-torrent sites in 2009.")
 	.attr({
-		"font-size":"20",
-		fill: "black"
+		"font-size":"14",
+		fill: "black",
+		"text-anchor":"start"
 	});
-text.rotate(-50);
+
 
 
 
@@ -149,27 +146,7 @@ paper.path( thirdSalePath )
 // remplir le cercle du centre (noir)
 paper.circle( centerX, centerY, centerRadius )
 	.attr({
-		fill:"black",
+		fill:"#333",
 		stroke: "none"
 		// fill: "r#fff-#000"
 	});
-
-
-// mouse over afficher informations 
-infocirc.node.onmouseover = function(){
-	infobox.animate({
-		opacity: "1",
-	},300);
-};
-
-infocirc.node.onmouseout = function(){
-	infobox.animate({
-		opacity: "0",
-	},300);
-};
-
-
-
-
-
-
