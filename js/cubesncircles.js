@@ -65,74 +65,110 @@ var step = Math.PI * 2 / albumLength;
 var pathString = "";
 var pathString2 = "";
 var pathString3 = "";
-
-
-// Albums sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = albumSales[i];
- 	if ( i == 0 ) {
- 		pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
-}
-
-// Digital sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = digitalSales[i];
- 	if ( i == 0 ) {
- 		pathString2 += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString2 += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
-}
-// third sales graph
-for( var i = 0; i < albumLength; i++ ) {
- 	var angle = -(step*i + Math.PI);
- 	var sin = Math.sin(angle);
- 	var cos = -Math.cos(angle);
- 	var value = thirdSale[i];
- 	if ( i == 0 ) {
- 		pathString3 += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	} else {
- 		pathString3 += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
- 	}
-}
-
-pathString += "L" + centerX + " " + centerY + "z";
-pathString2 += "L" + centerX + " " + centerY + "z";
-pathString3 += "L" + centerX + " " + centerY + "z";
-// third sales style
-paper.path( pathString3 ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#00f",
- 	"fill":"#00f",
- 	"fill-opacity": "0.3"
+var infocirc = paper.circle(40 , 450, 20).attr({
+	fill: "#eee",
+	stroke: "1"
 });
-// Albums sales style
-paper.path( pathString ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#f00",
- 	"fill":"#f00",
- 	"fill-opacity": "0.3"
+var infobox = paper.rect (65, 430, 100, 50, 5).attr({
+	fill:"#eee",
+	stroke:"0",
+	opacity : "0"
 });
+
+function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCircle) {
+	var albumLength = array.length;
+	var step = Math.PI * 2 / albumLength;
+	pathString = "";
+
+	for( var i = 0; i < albumLength; i++ ) {
+		var angle = -(step*i + Math.PI);
+		var sin = Math.sin(angle);
+		var cos = -Math.cos(angle);
+		var value = array[i];
+		if(i == 0) {
+			pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
+			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 );
+		} else {
+			pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
+			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 );
+		}
+	}
+	pathString += "L" + centerX + " " + centerY + "z";
+	return pathString;
+}
+var albumSalesPath = create_graph(albumSales,maxValue,radius,centerRadius,centerX,centerY,false);
+var digitalSalesPath = create_graph(digitalSales,maxValue,radius,centerRadius,centerX,centerY,false);
+var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,centerY,true);
+
+
+// Ajout de textes
+var text = paper.text(120,80,"Spotify")
+	.attr({
+		"font-size":"20",
+		fill: ""
+	});
+text.rotate(-50);
+
+
+
+// ajout des styles au PATHS
 // Digital sales style
-paper.path( pathString2 ).attr({
- 	"stroke-width": 1,
- 	"stroke": "#0f0",
- 	"fill":"#0f0",
- 	"fill-opacity": "0.3"
-});
+
+paper.path( digitalSalesPath )
+	.toBack()
+	.attr({
+		"stroke-width": 0,
+		"fill":"150-#005A91-#0085C7", // blue
+		"fill-opacity": ".75"
+	});
+	// Albums sales style
+paper.path( albumSalesPath )
+	.toBack()
+	.attr({
+		"stroke-width": 0,
+		"fill":"90-#4F983E-#4E9D66", // green
+		"fill-opacity": ".75"
+	});
+
+// third sales style
+var third = 
+paper.path( thirdSalePath )
+	.toBack()
+	.attr({
+		"stroke-width": 0,
+		fill: "90-#E22E18-#8E1A24", // rouge
+		"fill-opacity": "0"
+	})
+	.animate({
+		"fill-opacity":".75"
+	},3000, "ease-in");
+
 
 
 // remplir le cercle du centre (noir)
-paper.circle( centerX, centerY, centerRadius ).attr("fill","#000");
+paper.circle( centerX, centerY, centerRadius )
+	.attr({
+		fill:"black",
+		stroke: "none"
+		// fill: "r#fff-#000"
+	});
+
+
+// mouse over afficher informations 
+infocirc.node.onmouseover = function(){
+	infobox.animate({
+		opacity: "1",
+	},300);
+};
+
+infocirc.node.onmouseout = function(){
+	infobox.animate({
+		opacity: "0",
+	},300);
+};
+
+
+
 
 
 
