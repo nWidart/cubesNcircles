@@ -1,72 +1,35 @@
-var paper = new Raphael(document.getElementById('canvas_container'), 1400,1000);
-// var startAxisX = 20;
-// var startAxisY = 480;
-// var x_axis = paper.path('M ' + startAxisX + ' ' + startAxisY + ' l 1000 0');
-// var y_axis = paper.path('M ' + startAxisX + ' ' + startAxisY + ' l 0 -700');
-// var multiplierX = 40;
-// var multiplierY = 10;
-
-// // paper.path('M 40 470 l 0 20 ');
-// // paper.path('M 80 470 l 0 20 ');
-
-// // creation axe x
-// for(var i = 0; i < 18; i+=1) {
-// 	if(i>0){
-// 		var multiplier = 40;
-// 		paper.path('M ' + (i*multiplier) + ' 470 l 0 20 ');
-// 	}
-// }
-// // creation axe y
-// for(var n = 0; n < 48; n+=1) {
-// 	if (n>0) {
-// 		var multiplier = 10;
-// 		paper.path('M 15 ' + (n*multiplier) + ' l 10 0');
-// 	}
-// }
-
-
-var centerX = 600;
-var centerY = 370;
-
-
-
-
-// var albumSalesGraph = 'M 20  ' + (f*parseFloat(multiplierY));
-// for (var i = 1; i < albumLength; i+=1) {
-// 	var d = albumSales[i];
-// 	var nextLine = ' L ' + (i*multiplierX) + ' ' + (d*multiplierY);
-
-// 	albumSalesGraph = albumSalesGraph + nextLine;
-// }
-// paper.path(albumSalesGraph);
+var paper = new Raphael(document.getElementById('canvas_container'), 924,668);
+var centerX = 512;
+var centerY = 384;
 
 for (var i = 5; i < 14; i+=1) {
 	var multiplier = i*20;
-	paper.circle(centerX, centerY, 10+multiplier).attr({"stroke":"#eee", "stroke-opacity":".3"}).toBack();
+	paper.circle(centerX, centerY, 10+multiplier).attr({"stroke":"#eee", "stroke-opacity":".4"}).toBack();
 }
 
 for (var i = 0; i < 18; i+=1) {
-	var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier-10) ).attr({stroke:"#eee", "stroke-opacity":".3"}).toBack();
+	var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier-10) ).attr({stroke:"#eee", "stroke-opacity":".4"}).toBack();
 	if(i>0){
 		el.rotate(i*20, centerX, centerY);
 	}
 }
 
-
 // les valeurs nombre de vente
-var albumSales = new Array(39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 34.6, 32.2, 32, 33.6, 33.5, 31.9, 30.6, 27.5, 24.6, 22.2, 19.9,20);
+var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2, 32, 33.6, 33.5, 31.9, 30.6, 27.5, 24.6, 22.2, 19.1);
 var digitalSales = new Array(0,0,0,0,0,0,0,0,0,0,0.38,1.2,2.5,4.5,7,10.7,12.9,14.8);
-var thirdSale = new Array(35,37.3,38.4,41,46,47.8,52,53.2,52,55,82,82.3,82,81,80,82,87,89);
+var livemusicSales = new Array(11.7, 13.4, 12.8, 12.5, 13, 12.5, 12.8, 13.5, 13.5, 13.7, 14.8, 15.2, 16.5, 18.1, 19.4, 20.8, 22.2, 23.5);
+var musicSales = new Array(46, 46, 46, 46, 46, 48, 52, 54, 62, 76, 82, 82.3, 82.6, 81, 82, 82, 87, 89);
+var gameSales = new Array(14, 12, 15, 18, 19, 20, 14.7, 20, 27, 23, 25.4, 29, 31.6, 41.7, 54, 60.4, 61.2, 62.5);
 var maxValue = 90; // valeur maximum
 var radius = 150; // rayon du cercle
 var centerRadius = 91;
-var albumLength = albumSales.length;
+var albumLength = recordSales.length;
 var step = Math.PI * 2 / albumLength;
 var pathString = "";
 var pathString2 = "";
 var pathString3 = "";
 
-
+// Function to create the graphic ( circles and lines)
 function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCircle) {
 	var albumLength = array.length;
 	var step = Math.PI * 2 / albumLength;
@@ -86,19 +49,18 @@ function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCirc
 				if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7"});
 			}
 		}
-
-		
 		
 	}
 	pathString += "L" + centerX + " " + centerY + "z";
 	return pathString;
 }
-var albumSalesPath = create_graph(albumSales,maxValue,radius,centerRadius,centerX,centerY,false);
+
+//calling the function *create_graph
+var recordSalesPath = create_graph(recordSales,maxValue,radius,centerRadius,centerX,centerY,false);
 var digitalSalesPath = create_graph(digitalSales,maxValue,radius,centerRadius,centerX,centerY,false);
-var thirdSalePath = create_graph(thirdSale,maxValue,radius,centerRadius,centerX,centerY,true);
+var livemusicSalesPath = create_graph(livemusicSales,maxValue,radius,centerRadius,centerX,centerY,true);
 
-
-// Ajout de textes
+// Adding text -- not finished yet
 var text = paper.text(800,40,"Call of Duty: Modern Warfare 2, was the number one selling video game of 2009.\nThe game sold 11.86 million copies in stores and through legitimate vendors.4.1\n million copies of the game was illegally pirated off of bit-torrent sites in 2009.")
 	.attr({
 		"font-size":"14",
@@ -106,40 +68,42 @@ var text = paper.text(800,40,"Call of Duty: Modern Warfare 2, was the number one
 		"text-anchor":"start"
 	});
 
-
-
-
-// ajout des styles au PATHS
+// Drawing and styling the paths
 // Digital sales style
-
-paper.path( digitalSalesPath )
+ var first = paper.path( digitalSalesPath )
 	.toBack()
 	.attr({
 		"stroke-width": 0,
 		"fill":"150-#005A91-#0085C7", // blue
 		"fill-opacity": ".75"
-	});
-	// Albums sales style
-paper.path( albumSalesPath )
+	})
+	.animate({
+		"fill-opacity":".75"
+	},1000, "ease-in");
+
+// Live music sales style
+var third = paper.path( livemusicSalesPath )
+	.toBack()
+	.attr({
+		"stroke-width": 0,
+		fill: "150-#E22E18-#8E1A24", // rouge
+		"fill-opacity": "0",
+	})
+	.animate({
+		"fill-opacity":".55"
+	},2000, "ease-in");
+
+// Record sales style
+var second = paper.path( recordSalesPath )
 	.toBack()
 	.attr({
 		"stroke-width": 0,
 		"fill":"90-#4F983E-#4E9D66", // green
 		"fill-opacity": ".75"
-	});
-
-// third sales style
-var third = 
-paper.path( thirdSalePath )
-	.toBack()
-	.attr({
-		"stroke-width": 0,
-		fill: "90-#E22E18-#8E1A24", // rouge
-		"fill-opacity": "0"
 	})
 	.animate({
 		"fill-opacity":".75"
-	},3000, "ease-in");
+	},2000, "ease-in");
 
 
 
@@ -148,9 +112,12 @@ paper.circle( centerX, centerY, centerRadius )
 	.attr({
 		fill:"#333",
 		stroke: "none"
-		// fill: "r#fff-#000"
 	});
 
+// Games sales style
+
+
+//Movie sales style
 
 
 
