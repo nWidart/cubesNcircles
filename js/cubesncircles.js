@@ -1,8 +1,8 @@
-var paper = new Raphael(document.getElementById('canvas_container'), 924,668);
+var paper = new Raphael(document.getElementById('canvas_container'), 1200,668);
 var centerX = 512;
 var centerY = 384;
 
-for (var i = 5; i < 14; i+=1) {
+for (var i = 5; i < 16; i+=1) {
 	var multiplier = i*20;
 	paper.circle(centerX, centerY, 10+multiplier).attr({"stroke":"#eee", "stroke-opacity":".4"}).toBack();
 }
@@ -21,8 +21,8 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
 	musicSales = new Array(46, 46, 46, 46, 46, 48, 52, 54, 62, 76, 82, 82.3, 82.6, 81, 82, 82, 87, 89),
 	gameSales = new Array(14, 12, 15, 18, 19, 20, 14.7, 20, 27, 23, 25.4, 29, 31.6, 41.7, 54, 60.4, 61.2, 62.5),
 	maxValue = 90, // valeur maximum
-	radius = 150, // rayon du cercle
-	centerRadius = 91,
+	radius = 190, // rayon du cercle
+	centerRadius = 130,
 	albumSalesLength = recordSales.length,
 	liveMusicSalesLength = livemusicSales.length,
 	digitalSalesLength = digitalSales.length,
@@ -31,7 +31,6 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
 	pathString3 = "",
 	musicIndustrySales = new Array(),
 	globalMusicIndustrySales = new Array();
-
 
 if ( albumSalesLength == liveMusicSalesLength ) {
 	for ( var i = 0; i < albumSalesLength; i++ ) {
@@ -46,7 +45,6 @@ if ( digitalSalesLength == musicIndustrySalesLength ) {
 		globalMusicIndustrySales.push(sum);
 	}
 }
-
 
 // Function to create the graphic ( circles and lines)
 function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCircle) {
@@ -88,8 +86,6 @@ var text = paper.text(800,40,"Call of Duty: Modern Warfare 2, was the number one
 	});
 
 // Drawing and styling the paths
-
-
 // Record sales style
 var second = paper.path( recordSalesPath )
 	.toBack()
@@ -126,6 +122,4 @@ paper.circle( centerX, centerY, centerRadius )
 	});
 
 // Games sales style
-
-
-//Movie sales style
+// Movie sales style
