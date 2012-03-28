@@ -1,16 +1,32 @@
-body { background:#ddd; font-family:Helvetica, arial, sans-serif;
+body {
+	background:#ddd;
+	font-family:Helvetica, arial, sans-serif;
 }
 h1{
 	color:#fff;
 	font-size:45px;
 }
-ul{list-style:none;}
-a{text-decoration:none;}
-#container{z-index:9999999; position: relative;}
+ul{
+	list-style:none;
+}
+a{
+	text-decoration:none;
+}
+#container{
+	z-index:9999999;
+	position: relative;
+}
 .canvas_container {
 	width: 100%;
-	/*width: 1000px;*/
 	margin: -150 0px 40px 0px;
-	
 	padding: 20px;
+}
+.canvas_container:after {
+	content: '';
+	background: url('../images/svg.png');
+	width: 261px; height: 261px;
+	z-index: 10;
+	position: absolute;
+	top:344px;
+	right: 755px;
 }

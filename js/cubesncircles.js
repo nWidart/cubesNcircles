@@ -51,7 +51,6 @@ function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCirc
 	var albumLength = array.length;
 	var step = Math.PI * 2 / albumLength;
 	pathString = "";
-
 	for( var i = 0; i < albumLength; i++ ) {
 		var angle = -(step*i + Math.PI);
 		var sin = Math.sin(angle);
@@ -59,13 +58,15 @@ function create_graph(array,maxValue,radius,centerRadius,centerX,centerY,addCirc
 		var value = array[i];
 		if(i === 0) {
 			pathString += "M" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
-			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7"});
+			if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7",fill:"#ccc","fill-opacity":".7"});
+
 		} else {
 			pathString += "L" + (centerX + sin * ( centerRadius + (value/maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value/maxValue) * radius ) );
-			if(i != 1 && i != 3 && i != 6) {
-				if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7"});
+			if(i !== 0) {
+				if (addCircle) paper.circle( centerX + sin * ( centerRadius + (value/maxValue) * radius ) , centerY - cos * ( centerRadius + (value/maxValue) * radius ), 5 ).attr({stroke:"#777", "stroke-opacity":".7",fill:"#ccc","fill-opacity":".7"});
 			}
 		}
+		$('circle').attr('class','mini-circle');
 	}
 	pathString += "L" + centerX + " " + centerY + "z";
 	return pathString;
