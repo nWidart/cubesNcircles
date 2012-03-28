@@ -1,8 +1,16 @@
-body { background-color: #ccc;
+body { background:#ddd; font-family:Helvetica, arial, sans-serif;
 }
+h1{
+	color:#fff;
+	font-size:45px;
+}
+ul{list-style:none;}
+a{text-decoration:none;}
+#container{z-index:9999999; position: relative;}
 .canvas_container {
 	width: 100%;
 	/*width: 1000px;*/
-	border: 1px solid #222;
+	margin: -150 0px 40px 0px;
+	
 	padding: 20px;
 }
