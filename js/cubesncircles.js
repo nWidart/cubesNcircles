@@ -34,8 +34,6 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     pathString3 = "",
     musicIndustrySales = new Array(),
     globalMusicIndustrySales = new Array(),
-    popupX = new Array (),
-    popupY = new Array (),
     popupPath = '';
 
 if (albumSalesLength == liveMusicSalesLength) {
@@ -56,18 +54,35 @@ if (digitalSalesLength == musicIndustrySalesLength) {
 function get_hover_handler(value, circle) {
     return function (event) {
         var popup = $("#popup");
-        popup.css("display", "block");
+        popup.css("display", "block");//pour faire apparaître la popup
         var popupNumber = $(this).parent().attr("title");
-        var popupPath = paper.path("M " + popupX[popupNumber] + " " + popupY[popupNumber] + "L 875 65");
-        popupPath.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7"});
+        var cx = circle.attr("cx"); /*vous pouvez récupérer les coordonnées du centre du cercle comme ça, ça vous évite d'utiliser un tableau pour tout stocker*/
+        var cy = circle.attr("cy");
+        var p;
+       /*option 1:  votre droite */
+        //p = "M " + cx + " " + cy+ "L 875 65";
+
+        /*option 2 la courbe*/
+        //p = "M " + cx + " " + cy+ "Q 100 100  875 65";
+
+        /*option 3 plusieurs droites*/
+        if (cy < centerY)
+            p =  "M " + cx + " " + cy + " L" + cx + " " + "100 " + "L 875 65";
+        else  if (cx < centerX) /*en bas à gauche, ligne en trois partie partant vers la gauche */
+            p =  "M " + cx + " " + cy + " L" + 100 + " " + cy  + "L 100 100  L 875 65";
+        else
+            p =  "M " + cx + " " + cy + " L" + 800 + " " + cy  + "L 800 100  L 875 65";
+        var popupPath = paper.path(p);
+
+        popupPath.attr({stroke:"#777", "stroke-opacity":".7","stroke-width":"3"}); /* ai rajouté stroke-width pour modifier la largeur du trait*/
+        circle.pathToPopup = popupPath ; /*je rajoute une variable au circle pour me rappeler du chemin dessiné , voir get_out_handler*/
         popup.html("<div>" + value + "</div>");
     };
 }
 
-function get_out_handler() {
+function get_out_handler(circle) {
     return function (event) {
-        var popup = $("#popup");
-        popup.css("display", "none");
+        circle.pathToPopup.remove();
         // popupPath.remove(); Ne va pas
     }
 }
@@ -75,9 +90,6 @@ function get_out_handler() {
 function hover_effect(circle) {
     circle.attr({"fill-opacity":".9"});
 }
-// ARRAY X POSITION - Y POSITION
-var popupX = new Array ();
-var popupY = new Array ();
 
 
 // Function to create the graphic ( circles and lines)
@@ -120,11 +132,10 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
         if (addCircle) {
             var c = paper.circle(centerX + sin * ( centerRadius + (value / maxValue) * radius ), centerY - cos * ( centerRadius + (value / maxValue) * radius ), 8);
             c.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7", "title": i});
-            popupX[i] = centerX + sin * ( centerRadius + (value / maxValue) * radius );
-            popupY[i] = centerY - cos * ( centerRadius + (value / maxValue) * radius );
+
             $(c.node).mouseenter(get_hover_handler(legText, c));
             $(c.node).mouseenter(hover_effect(c));
-            // $(c.node).mouseleave(get_out_handler());
+            $(c.node).mouseleave(get_out_handler(c));
             circles.push(c);
         }
     }
@@ -177,11 +188,6 @@ $('#navigation a.music').on('click', function() {
             stroke:"none"
         });
 });
-second.on('click', function() {
-    console.log(this);
-});
-
-
 
 $.each(circles, function (i, c) {
     c.toFront();
