@@ -10,6 +10,9 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     digitalSales = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.38, 1.2, 2.5, 4.5, 7, 10.7, 12.9, 14.8),
     musicSales = new Array(46, 46, 46, 46, 46, 48, 52, 54, 62, 76, 82, 82.3, 82.6, 81, 82, 82, 87, 89),
     gameSales = new Array(14, 12, 15, 18, 19, 20, 14.7, 20, 27, 23, 25.4, 29, 31.6, 41.7, 54, 60.4, 61.2, 62.5),
+    movieTickets = new Array(5.1,5.29,5.59,6.77,7.3,7.48,8.13,9.7,13.5,16.4,17.8,21,25.5,26.3,27.7,29.4,31.8,32.5),
+    dvdVod = new Array(22.75,25.11,35.61,36.23,38.7,43.52,43.87,53.4,52.2,59.6,64.2,61.3,55.5,55.3,52.3,52.6,55.2,54.7),
+    gamesConsole = new Array(8.7,9,9.5,11,16,17.3,18.5,20,21.88,23.3,26.33,27.67,31.63,37.47,41.46,44.23,46.72,48.88);
     maxValue = 90, // valeur maximum
     radius = 190, // rayon du cercle
     centerRadius = 130,
@@ -48,10 +51,10 @@ function get_hover_handler(value, circle) {
         var cy = circle.attr("cy");
         var p;
         /*option 1:  votre droite */
-        //p = "M " + cx + " " + cy+ "L 875 65";
+        // p = "M " + cx + " " + cy+ "L 875 65";
 
         /*option 2 la courbe*/
-        //p = "M " + cx + " " + cy+ "Q 100 100  875 65";
+        // p = "M " + cx + " " + cy+ "Q 100 100  875 65";
 
         /*option 3 plusieurs droites*/
         if (cy < centerY)
@@ -62,7 +65,7 @@ function get_hover_handler(value, circle) {
             p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 65";
         var popupPath = paper.path(p);
 
-        popupPath.attr({stroke:"#777", "stroke-opacity":".7", "stroke-width":"3"});
+        popupPath.attr({stroke:"#777", "stroke-opacity":".7", "stroke-width":"2"});
         /* ai rajouté stroke-width pour modifier la largeur du trait*/
         circle.pathToPopup = popupPath;
         /*je rajoute une variable au circle pour me rappeler du chemin dessiné , voir get_out_handler*/
@@ -121,7 +124,7 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
         pathString += move + (centerX + sin * ( centerRadius + (value / maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value / maxValue) * radius ) );
         if (addCircle) {
             var c = paper.circle(centerX + sin * ( centerRadius + (value / maxValue) * radius ), centerY - cos * ( centerRadius + (value / maxValue) * radius ), 8);
-            c.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7", "title":i});
+            c.attr({stroke:"#fff", "stroke-opacity":".4", fill:"90-#fff-#ccc", "fill-opacity":".7", "title":i});
 
             $(c.node).mouseenter(get_hover_handler(legText, c));
             $(c.node).mouseenter(hover_effect(c));
@@ -153,8 +156,6 @@ function reinit_all(industry) {
             el.rotate(i * 20, centerX, centerY);
         }
     }
-
-
         /*ici, les données chargées devraient dépendre du paramètre industry : music, media, ....*/
         var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
             digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
@@ -167,29 +168,34 @@ function reinit_all(industry) {
             .toBack()
             .attr({
                 "stroke-width":0,
-                "fill":"90-#4F983E-#4E9D66", // green
-                "fill-opacity":".75"
+                "fill":"#007E9A", // bleu
+                "fill-opacity":"0"
             })
             .animate({
-                "fill-opacity":".75"
-            }, 2000, "ease-in");
+                "fill-opacity":"1"
+            }, 1000, "ease-in");
 
         // music industry sales style
         var third = paper.path(musicIndustrySalesPath)
             .toBack()
             .attr({
                 "stroke-width":0,
-                "fill":"150-#E22E18-#8E1A24", // red
-                "fill-opacity":".0"
-            });
+                "fill":"#F5A400", // red
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 2000, "ease-in");
         // global music industry sales style
         var forth = paper.path(globalMusicIndustrySalesPath)
             .toBack()
             .attr({
                 "stroke-width":0,
-                "fill":"150-#005A91-#0085C7", // red
-                "fill-opacity":".75"
-            });
+                "fill":"#A9121D", // red
+                "fill-opacity":"0"
+            }).animate({
+                "fill-opacity":"1"
+            }, 3000, "ease-in");
         // remplir le cercle du centre (noir)
         paper.circle(centerX, centerY, centerRadius)
             .attr({
@@ -202,6 +208,83 @@ function reinit_all(industry) {
         c.toFront();
         c.animate({'fill':'#666'}, 1000);
     });
+
+    } else if (industry == "media") {
+        circles = [];
+        for (var i = 5; i < 16; i += 1) {
+            var multiplier = i * 20;
+            paper.circle(centerX, centerY, 10 + multiplier).attr({"stroke":"#eee", "stroke-opacity":".1"}).toBack();
+        }
+        // creation of the center lines
+        for (var i = 0; i < 18; i += 1) {
+            var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier - 10)).attr({stroke:"#eee", "stroke-opacity":".1"}).toBack();
+            if (i > 0) {
+                el.rotate(i * 20, centerX, centerY);
+            }
+        }
+        var movieTicketsPath = create_graph(movieTickets, maxValue, radius, centerRadius, centerX, centerY, false),
+            dvdVodPath = create_graph(dvdVod, maxValue, radius, centerRadius, centerX, centerY, true);
+        var mtp = paper.path(dvdVodPath)// dernière
+            .attr({
+                "stroke-width":0,
+                "fill":"#913402",
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 1000, "ease-in");
+        var dvp = paper.path(movieTicketsPath)
+            .attr({
+                "stroke-width":0,
+                "fill":"#685D47", // green
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 2000, "ease-in");
+    $.each(circles, function (i, c) {
+        c.toFront();
+        c.animate({'fill':'#666'}, 1000);
+    });
+
+    } else if (industry == "games") {
+        circles = [];
+        for (var i = 5; i < 16; i += 1) {
+            var multiplier = i * 20;
+            paper.circle(centerX, centerY, 10 + multiplier).attr({"stroke":"#eee", "stroke-opacity":".1"}).toBack();
+        }
+        // creation of the center lines
+        for (var i = 0; i < 18; i += 1) {
+            var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier - 10)).attr({stroke:"#eee", "stroke-opacity":".1"}).toBack();
+            if (i > 0) {
+                el.rotate(i * 20, centerX, centerY);
+            }
+        }
+        var gameSalesPath = create_graph(gameSales, maxValue, radius, centerRadius, centerX, centerY, true);
+        var gameConsolePath = create_graph(gamesConsole, maxValue, radius, centerRadius, centerX, centerY, false);
+
+        var gsp = paper.path(gameSalesPath)
+            .attr({
+                "stroke-width":0,
+                "fill":"#f2b807", // green
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 1000, "ease-in");
+        var gcp = paper.path(gameConsolePath)
+            .attr({
+                "stroke-width":0,
+                "fill":"#6A2EA6", // green
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 2000, "ease-in");
+        $.each(circles, function (i, c) {
+        c.toFront();
+        c.animate({'fill':'#666'}, 1000);
+        });
     }
 }
 
