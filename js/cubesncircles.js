@@ -1,4 +1,4 @@
-var paper = new Raphael(document.getElementById('canvas_container'), 1200,668);
+var paper = new Raphael(document.getElementById('canvas_container'), 1024,768);
 var centerX = 512;
 var centerY = 384;
 
