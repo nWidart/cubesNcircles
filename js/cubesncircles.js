@@ -1,13 +1,15 @@
-var paper = new Raphael(document.getElementById('canvas_container'), 1200, 668);
+// creation of the canvas
+var paper = new Raphael(document.getElementById('canvas_container'), 1024, 668);
 
-var centerX = 512;
+// creation of the grid circles
+var centerX = 460;
 var centerY = 384;
 var circles = [];
 for (var i = 5; i < 16; i += 1) {
     var multiplier = i * 20;
     paper.circle(centerX, centerY, 10 + multiplier).attr({"stroke":"#eee", "stroke-opacity":".4"}).toBack();
 }
-
+// creation of the center lines
 for (var i = 0; i < 18; i += 1) {
     var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier - 10)).attr({stroke:"#eee", "stroke-opacity":".4"}).toBack();
     if (i > 0) {
@@ -15,7 +17,7 @@ for (var i = 0; i < 18; i += 1) {
     }
 }
 
-// les valeurs nombre de vente
+// global variables.
 var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2, 32, 33.6, 33.5, 31.9, 30.6, 27.5, 24.6, 22.2, 19.1),
     livemusicSales = new Array(11.7, 13.4, 12.8, 12.5, 13, 12.5, 12.8, 13.5, 13.5, 13.7, 14.8, 15.2, 16.5, 18.1, 19.4, 20.8, 22.2, 23.5),
     digitalSales = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.38, 1.2, 2.5, 4.5, 7, 10.7, 12.9, 14.8),
@@ -31,7 +33,10 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     pathString2 = "",
     pathString3 = "",
     musicIndustrySales = new Array(),
-    globalMusicIndustrySales = new Array();
+    globalMusicIndustrySales = new Array(),
+    popupX = new Array (),
+    popupY = new Array (),
+    popupPath = '';
 
 if (albumSalesLength == liveMusicSalesLength) {
     for (var i = 0; i < albumSalesLength; i++) {
@@ -47,18 +52,16 @@ if (digitalSalesLength == musicIndustrySalesLength) {
     }
 }
 
-
+//popups hover
 function get_hover_handler(value, circle) {
     return function (event) {
         var popup = $("#popup");
         popup.css("display", "block");
-        var circle_node = $(circle.node);
-        var x = circle_node.offset().left;
-        var y = circle_node.offset().top;
-        popup.css("top", y);// event.pageY);
-        popup.css("left", x);//event.pageX);
-        popup.html("<div>" + value.toFixed(2) + "%</div>");
-    }
+        //var popupNumber = $(this).parent().attr("title");
+        //var popupPath = paper.path("M " + popupX[popupNumber] + " " + popupY[popupNumber] + "L 0 0");
+        //popupPath.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7"});
+        popup.html("<div>" + value + "</div>");
+    };
 }
 
 function get_out_handler() {
@@ -67,30 +70,55 @@ function get_out_handler() {
         popup.css("display", "none");
     }
 }
+// ARRAY X POSITION - Y POSITION
+var popupX = new Array ();
+var popupY = new Array ();
 
 
 // Function to create the graphic ( circles and lines)
 function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, addCircle) {
+
     var albumLength = array.length;
     var step = Math.PI * 2 / albumLength;
     pathString = "";
+    var legendesTextesArray = new Array(
+        '<img src="http://fashx.com/wp-content/uploads/2012/01/spotify-logo.jpg" width="50" height="50"/><a href="www.google.com">Apple</a>',
+        'Banane',
+        'spotify',
+        'patate',
+        'steam',
+        'tomate',
+        'Apple2',
+        'Apple3',
+        'Apple4',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple',
+        'Apple');
     for (var i = 0; i < albumLength; i++) {
         var angle = -(step * i + Math.PI);
         var sin = Math.sin(angle);
         var cos = -Math.cos(angle);
         var value = array[i];
+        var legText = legendesTextesArray[i];
         var move;
         if (i === 0)
             move = "M ";
         else
             move = "L ";
-
         pathString += move + (centerX + sin * ( centerRadius + (value / maxValue) * radius ) ) + "," + (centerY - cos * ( centerRadius + (value / maxValue) * radius ) );
         if (addCircle) {
-            var c = paper.circle(centerX + sin * ( centerRadius + (value / maxValue) * radius ), centerY - cos * ( centerRadius + (value / maxValue) * radius ), 5);
-            c.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7"});
-            $(c.node).mousemove(get_hover_handler(value, c));
-            $(c.node).mouseleave(get_out_handler());
+            var c = paper.circle(centerX + sin * ( centerRadius + (value / maxValue) * radius ), centerY - cos * ( centerRadius + (value / maxValue) * radius ), 8);
+            c.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7", "title": i});
+            popupX[i] = centerX + sin * ( centerRadius + (value / maxValue) * radius );
+            popupY[i] = centerY - cos * ( centerRadius + (value / maxValue) * radius );
+            $(c.node).mouseenter(get_hover_handler(legText, c));
+            // $(c.node).mouseleave(get_out_handler());
             circles.push(c);
         }
     }
@@ -110,13 +138,7 @@ var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, 
 $('circle').attr('class', 'mini-circle');
 // Adding text -- not finished yet
 
-var text = paper.text(800, 40, "Call of Duty: Modern Warfare 2, was the number one selling video game of 2009.\nThe game sold 11.86 million copies in stores and through legitimate vendors.4.1\n million copies of the game was illegally pirated off of bit-torrent sites in 2009.")
-    .attr({
-        "font-size":"14",
-        fill:"black",
-        "text-anchor":"start"
-    });
-/* peut-être simplement utiliser un div ici, non, ça devrait suffir ? */
+
 
 // Drawing and styling the paths
 // Record sales style
