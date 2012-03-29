@@ -3,20 +3,96 @@
 	<title>Dataviz</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/raphael-min.js"></script>
+	<script type="text/javascript" src="js/popup.js"></script>
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" />
 </head>
+
 <body>
-	<div id="container">
-		<h1>How online piracy affects <br />the media indutry</h1>
+	<div id="navigation">
 		<ul>
 			<li><a href="#">Music</a></li>
 			<li><a href="#">Media</a></li>
 			<li><a href="#">Games</a></li>
 		</ul>
-	</div>
-	<div class="canvas_container" id="canvas_container">
-	</div>
-    <div id="popup"></div>
+	</div><!-- end navigation-->
+	<div id="container">
+		<div id="content">
+			<h1>How online piracy affects <br />the media industry</h1>
+			<div id="popup"></div>
+		</div>
+		<div class="canvas_container" id="canvas_container"></div>
+	</div><!-- end container-->
+	<div class="footer">
+		<div class="footer-inner">
+			<ul>
+				<li><a href="#?w=500" rel="popup1" class="poplight">Meet the team</a></li>
+				<li><a href="#?w=500" rel="popup2" class="poplight">Making-Of</a></li>
+				<li><a href="#?w=500" rel="popup3" class="poplight">Sources</a></li>
+			</ul>
+		</div><!-- end footer-inner-->
+		<div id="popup1" class="popup_block">
+			<div id="meet_team">
+				<div class="meet">
+					<img src="images/schaus_gilles.png" width="100" />
+					<h3>Schaus Gilles</h3>
+					<a href="https://twitter.com/#!/SkoozG">@SkoozG</a>
+					<a href="http://www.schausgilles.com">Website</a>
+					<a href="htttp://wwww.gilles-schaus.infographie-heaj.be">Portfolio (Heaj)</a>
+				</div><!-- end meet-->
+				<div class="meet clear">
+					<img src="images/vreux_simon.jpg" width="100" />
+					<h3>Vreux Simon</h3>
+					<a href="https://twitter.com/#!/SkoozG">@Simuse</a>
+					<a href="htttp://wwww.simon-vreux.infographie-heaj.be">Portfolio (Heaj)</a>
+				</div><!-- end meet-->
+				<div class="meet clear">
+					<img src="images/servais_gil.png" width="100" />
+					<h3>Servais Gil</h3>
+					<a href="https://twitter.com/#!/Gil_Servais">@Gil_Servais</a>
+					<a href="htttp://wwww.gil-servais.infographie-heaj.be">Portfolio (Heaj)</a>
+				</div><!-- end meet-->
+				<div class="meet clear">
+					<img src="images/widart_nicolas.png" width="100" />
+					<h3>Widart Nicolas</h3>
+					<a href="https://twitter.com/#!/NicolasWidart">@NicolasWidart</a>
+					<a href="http://nicolaswidart.com/site/">Website</a>
+					<a href="htttp://wwww.nicolas-widart.infographie-heaj.be">Portfolio (Heaj)</a>
+				</div><!-- end meet-->
+			</div><!-- end meet_team-->
+		</div><!-- end popup 1-->
+		<div id="popup2" class="popup_block">
+			<div id="makingOf">
+				<a href="images/images-making/makingof_1.jpg"><img src="images/images-making/makingof_1.jpg" /></a>
+				<a href="images/images-making/makingof_2.jpg"><img src="images/images-making/makingof_2.jpg" /></a>
+				<a href="images/images-making/makingof_3.jpg"><img src="images/images-making/makingof_3.jpg" /></a>
+				<a href="images/images-making/makingof_5.jpg"><img src="images/images-making/makingof_5.jpg" /></a>
+				<a href="images/images-making/makingof_6.jpg"><img src="images/images-making/makingof_6.jpg" /></a>
+				<a href="images/images-making/makingof_7.jpg"><img src="images/images-making/makingof_7.jpg" /></a>
+				<a href="images/images-making/makingof_8.jpg"><img src="images/images-making/makingof_8.jpg" /></a>
+				<a href="images/images-making/makingof_10.jpg"><img src="images/images-making/makingof_10.jpg" /></a>
+				<a href="images/images-making/makingof_11.jpg"><img src="images/images-making/makingof_11.jpg" /></a>
+			</div><!-- end makingOf-->
+		</div><!-- end popup2-->
+		<div id="popup3" class="popup_block">
+			<ul>	
+				<h3>Online piracy Statistics</h3>
+				<li><a href="http://en.wikipedia.org/wiki/Warez">http://en.wikipedia.org/wiki/Warez</a></li>
+				<li><a href="http://www.computerdjsummit.com/members/documents/piracy.html">www.computerdjsummit.com</a></li>
+				<li><a href="http://977music.com/blog/2011/03/the-numbers-that-reveal-online-piracy/">http://977music.com/</a></li>
+				<li><a href="http://torrentfreak.com/">http://torrentfreak.com/</a></li>
+				<li><a href="http://www.havocscope.com/">http://www.havocscope.com/</a></li>
+				<h3>Reports</h3>
+				<li><a href="http://www.ifpi.org/content/library/DMR2012.pdf">http://www.ifpi.org</a></li>
+				<li><a href="http://portal.bsa.org/internetreport2009/2009internetpiracyreport.pdf">Piracy Report 2009</a></li>
+				<li><a href="http://www.ifpi.org/content/library/DMR2012_key_facts_and_figures.pdf">IFPI Digital Music report</a></li>
+				<li><a href="http://www.iipa.com/pdf/IIPA2010USTRDecisionsSpecial301TableofEstimatedTradeLossesandPiracyLevels061110.pdf">Estimated loss due copyright piracy</a></li>
+				<li><a href="http://www.sony.net/SonyInfo/IR/financial/ar/8ido180000023g2o-att/SonyAR09-E.pdf">Sony annuel Report 2009</a></li>
+			</ul><!-- end ul-->
+		</div><!-- end popup3-->
+		
+	</div><!-- end footer-->
+    <small>Copyright by Team Cubes&Circles 2012</small>
 
 	<script type="text/javascript" src="js/cubesncircles.js"></script>
 </body>

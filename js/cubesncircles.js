@@ -1,5 +1,5 @@
 // creation of the canvas
-var paper = new Raphael(document.getElementById('canvas_container'), 1024, 668);
+var paper = new Raphael(document.getElementById('canvas_container'), 1024, 768);
 
 // creation of the grid circles
 var centerX = 460;
