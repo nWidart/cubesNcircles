@@ -23,6 +23,8 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     digitalSales = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.38, 1.2, 2.5, 4.5, 7, 10.7, 12.9, 14.8),
     musicSales = new Array(46, 46, 46, 46, 46, 48, 52, 54, 62, 76, 82, 82.3, 82.6, 81, 82, 82, 87, 89),
     gameSales = new Array(14, 12, 15, 18, 19, 20, 14.7, 20, 27, 23, 25.4, 29, 31.6, 41.7, 54, 60.4, 61.2, 62.5),
+    movieTickets = new Array(5.1,5.29,5.59,6.77,7.3,7.48,8.13,9.7,13.5,16.4,17.8,21,25.5,26.3,27.7,29.4,31.8,32.5);
+    dvdVod = new Array(22.75,25.11,35.61,36.23,38.7,43.52,43.87,53.4,52.2,59.6,64.2,61.3,55.5,55.3,52.3,52.6,55.2,54.7);
     maxValue = 90, // valeur maximum
     radius = 190, // rayon du cercle
     centerRadius = 130,
@@ -63,7 +65,7 @@ function get_hover_handler(value, circle) {
         popup.html("<div>" + value + "</div>");
     };
 }
-
+// closing the popups
 function get_out_handler() {
     return function (event) {
         var popup = $("#popup");
@@ -132,9 +134,7 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
     return pathString;
 }
 
-//calling the function *create_graph
-
-
+// Le clic sur le lien MUSIC
 $('#navigation a.music').on('click', function() {
     var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
     digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
@@ -177,11 +177,42 @@ $('#navigation a.music').on('click', function() {
             stroke:"none"
         });
 });
-second.on('click', function() {
-    console.log(this);
+// Le clic sur le lien MOVIES
+$('#navigation a.movies').on('click', function() {
+    var movieTicketsPath = create_graph(movieTickets, maxValue, radius, centerRadius, centerX, centerY, true),
+        dvdVodPath = create_graph(dvdVod, maxValue, radius, centerRadius, centerX, centerY, true);
+    var mtp = paper.path(movieTicketsPath)
+        .attr({
+            "stroke-width":0,
+            "fill":"#4E9D66", // green
+            "fill-opacity":".75"
+        })
+        .animate({
+            "fill-opacity":".75"
+        }, 2000, "ease-in");
+    var dvp = paper.path(dvdVodPath)
+        .attr({
+            "stroke-width":0,
+            "fill":"90-#4F983E-#4E9D66", // green
+            "fill-opacity":".75"
+        })
+        .animate({
+            "fill-opacity":".75"
+        }, 2000, "ease-in");
 });
-
-
+// Le clic sur le lien GAMES
+$('#navigation a.games').on('click', function() {
+    var gameSalesPath = create_graph(gameSales, maxValue, radius, centerRadius, centerX, centerY, true);
+    var gsp = paper.path(gameSalesPath)
+        .attr({
+            "stroke-width":0,
+            "fill":"90-#4F983E-#4E9D66", // green
+            "fill-opacity":".75"
+        })
+        .animate({
+            "fill-opacity":".75"
+        }, 2000, "ease-in");
+});
 
 $.each(circles, function (i, c) {
     c.toFront();
