@@ -7,11 +7,11 @@ var centerY = 384;
 var circles = [];
 for (var i = 5; i < 16; i += 1) {
     var multiplier = i * 20;
-    paper.circle(centerX, centerY, 10 + multiplier).attr({"stroke":"#eee", "stroke-opacity":".4"}).toBack();
+    paper.circle(centerX, centerY, 10 + multiplier).attr({"stroke":"#eee", "stroke-opacity":".1"}).toBack();
 }
 // creation of the center lines
 for (var i = 0; i < 18; i += 1) {
-    var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier - 10)).attr({stroke:"#eee", "stroke-opacity":".4"}).toBack();
+    var el = paper.path('M ' + centerX + ' ' + centerY + ' l 0 ' + (-multiplier - 10)).attr({stroke:"#eee", "stroke-opacity":".1"}).toBack();
     if (i > 0) {
         el.rotate(i * 20, centerX, centerY);
     }
@@ -57,9 +57,9 @@ function get_hover_handler(value, circle) {
     return function (event) {
         var popup = $("#popup");
         popup.css("display", "block");
-        //var popupNumber = $(this).parent().attr("title");
-        //var popupPath = paper.path("M " + popupX[popupNumber] + " " + popupY[popupNumber] + "L 0 0");
-        //popupPath.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7"});
+        var popupNumber = $(this).parent().attr("title");
+        var popupPath = paper.path("M " + popupX[popupNumber] + " " + popupY[popupNumber] + "L 875 65");
+        popupPath.attr({stroke:"#777", "stroke-opacity":".7", fill:"#ccc", "fill-opacity":".7"});
         popup.html("<div>" + value + "</div>");
     };
 }
@@ -68,7 +68,12 @@ function get_out_handler() {
     return function (event) {
         var popup = $("#popup");
         popup.css("display", "none");
+        // popupPath.remove(); Ne va pas
     }
+}
+
+function hover_effect(circle) {
+    circle.attr({"fill-opacity":".9"});
 }
 // ARRAY X POSITION - Y POSITION
 var popupX = new Array ();
@@ -83,7 +88,7 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
     pathString = "";
     var legendesTextesArray = new Array(
         '<img src="http://fashx.com/wp-content/uploads/2012/01/spotify-logo.jpg" width="50" height="50"/><a href="www.google.com">Apple</a>',
-        'Banane',
+        '<div id="1994"><h4>1994</h4><h5>In numbers:</h5><ul><li>Physical album sales : $39.8 billion.</li><li>Concert ticket sales : $11.7 billion</li></ul><h5>Main events:</h5><img src="http://fashx.com/wp-content/uploads/2012/01/spotify-logo.jpg" width="50" height="50"/><p>Napster arrives, 2 billion files are shared and 80 million people use it.</p></div>',
         'spotify',
         'patate',
         'steam',
@@ -118,67 +123,70 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
             popupX[i] = centerX + sin * ( centerRadius + (value / maxValue) * radius );
             popupY[i] = centerY - cos * ( centerRadius + (value / maxValue) * radius );
             $(c.node).mouseenter(get_hover_handler(legText, c));
+            $(c.node).mouseenter(hover_effect(c));
             // $(c.node).mouseleave(get_out_handler());
             circles.push(c);
         }
     }
-
-
     pathString += "L" + centerX + " " + centerY + "z";
     return pathString;
 }
 
 //calling the function *create_graph
 
-var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
+
+$('#navigation a.music').on('click', function() {
+    var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
     digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
     livemusicSalesPath = create_graph(livemusicSales, maxValue, radius, centerRadius, centerX, centerY, false),
     musicIndustrySalesPath = create_graph(musicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, false),
     globalMusicIndustrySalesPath = create_graph(globalMusicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, true);
-$('circle').attr('class', 'mini-circle');
-// Adding text -- not finished yet
+    // Drawing and styling the paths
+    // Record sales style
+    var second = paper.path(recordSalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"90-#4F983E-#4E9D66", // green
+            "fill-opacity":".75"
+        })
+        .animate({
+            "fill-opacity":".75"
+        }, 2000, "ease-in");
+
+    // music industry sales style
+    var third = paper.path(musicIndustrySalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"150-#E22E18-#8E1A24", // red
+            "fill-opacity":".0"
+        });
+    // global music industry sales style
+    var forth = paper.path(globalMusicIndustrySalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"150-#005A91-#0085C7", // red
+            "fill-opacity":".75"
+        });
+    // remplir le cercle du centre (noir)
+    paper.circle(centerX, centerY, centerRadius)
+        .attr({
+            fill:"#333",
+            stroke:"none"
+        });
+});
+second.on('click', function() {
+    console.log(this);
+});
 
 
-
-// Drawing and styling the paths
-// Record sales style
-var second = paper.path(recordSalesPath)
-    .toBack()
-    .attr({
-        "stroke-width":0,
-        "fill":"90-#4F983E-#4E9D66", // green
-        "fill-opacity":".75"
-    })
-    .animate({
-        "fill-opacity":".75"
-    }, 2000, "ease-in");
-
-// music industry sales style
-var second = paper.path(musicIndustrySalesPath)
-    .toBack()
-    .attr({
-        "stroke-width":0,
-        "fill":"150-#E22E18-#8E1A24", // red
-        "fill-opacity":".0"
-    });
-// global music industry sales style
-var second = paper.path(globalMusicIndustrySalesPath)
-    .toBack()
-    .attr({
-        "stroke-width":0,
-        "fill":"150-#005A91-#0085C7", // red
-        "fill-opacity":".75"
-    });
-// remplir le cercle du centre (noir)
-paper.circle(centerX, centerY, centerRadius)
-    .attr({
-        fill:"#333",
-        stroke:"none"
-    });
 
 $.each(circles, function (i, c) {
     c.toFront();
-    c.animate({'fill':'red'}, 1000);
+    c.animate({'fill':'#666'}, 1000);
 });
 // Games sales style
 // Movie sales style
+

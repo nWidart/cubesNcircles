@@ -104,7 +104,7 @@ a{
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
     -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .3);
     top: 250px;
-    right: -20px;
+    right: -40px;
 
     /* Gradient for popup box*/
  	background: #e8e8e8; /* Old browsers */
@@ -123,7 +123,7 @@ a{
 	transition: 0.2s linear;
 }
 
-.footer-inner a, #meet_team a, #popup a,{
+.footer-inner a, #meet_team a, #popup a, .meet q{
 	text-decoration:none;
 	color:#eee;
 	font-size:14px;
@@ -241,4 +241,52 @@ a{
 #makingOf img{
 	width:100%;
 	margin-bottom:10px;
+}
+/* //////////////////////////////// pop up box #popup /////////////////// */
+#popup{
+    min-height: 80px;
+    width: 305px;
+    margin:5px;
+    padding:  10px;
+    position: absolute;
+    display : none;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    border:1px #fff solid;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+    -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .3);
+    top: 250px;
+    right: -200px;
+
+    /* Gradient for popup box*/
+ 	background: #e8e8e8 url(../images/fabric_1.png);
+}
+#popup img{
+	float:left;
+	margin-right:10px;
+}
+#popup ul{
+	clear:both;
+}
+#popup h4{
+	font-size:60px;
+	color:#6a8195;
+	text-align:center;
+	margin-bottom:10px;
+	border-bottom: 2px dotted #ccc;
+	padding-bottom:10px;
+
+}
+#popup h5{
+	font-size:24px;
+	text-align:left;
+	border-bottom:1px solid #ddd;
+	margin-bottom:10px;
+	color:#bbb;
+	padding-bottom:5px;
+
+}
+#popup li{
+	font-size:14px;
 }
