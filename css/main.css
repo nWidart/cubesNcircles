@@ -16,6 +16,11 @@ body {
 	background:#eee url(../images/gray_sand.png);
 	font-family:verdana, geneva, sans-serif;
 }
+small{
+	text-align:center;
+	font-size:11px;
+	color:#ccc;
+}
 h1{
 	color:#fff;
 	font-size:60px;
@@ -33,9 +38,11 @@ li{
 	margin-bottom:30px;
 		
 }
-
+/* Div's*/
 a{
 	text-decoration:none;
+}
+#navigation a{
 	font-weight:100;
 	color:#fff;
 	font-size:24px;
@@ -48,15 +55,18 @@ a{
 
 }
 
-/* Div's*/
+.clear{clear:both;}
+
 #navigation a:hover{
 	padding-left:60px;
-
 }
 
-#navigation{position: fixed; left:0; top:200px;}
+#navigation{
+	position: fixed; 
+	left:0; top:200px;
+}
 #content{
-	z-index:9999999;
+	z-index:9999;
 	position: relative;
 }
 #container{
@@ -84,7 +94,6 @@ a{
     padding:  10px 0 0 10px;
     position: absolute;
     background: white;
-    color: black;
     display : none;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
@@ -92,6 +101,8 @@ a{
     border:1px #fff solid;
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
     -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .3);
+
+    /* Gradient for popup box*/
  	background: #e8e8e8; /* Old browsers */
 	background: -moz-linear-gradient(top,  #e8e8e8 48%, #cecdc6 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(48%,#e8e8e8), color-stop(100%,#cecdc6)); /* Chrome,Safari4+ */
@@ -101,8 +112,129 @@ a{
 	background: linear-gradient(top,  #e8e8e8 48%,#cecdc6 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#cecdc6',GradientType=0 ); /* IE6-9 */
 }
-#popup a{
-	color:#eee;
-	text-decoration: underline;
 
+.footer-inner a,.footer-inner a:hover,  #navigation a, #navigation a:hover, #meet_team a, #meet_team a:hover, #popup3 a, #popup3 a:hover, #popup a, #popup a:hover{
+	-webkit-transition: 0.2s linear;
+	-moz-transition: 0.2s linear;
+	transition: 0.2s linear;
+}
+
+.footer-inner a, #meet_team a, #popup a,{
+	text-decoration:none;
+	color:#eee;
+	font-size:14px;
+	border-bottom: 1px dotted #ccc;
+}
+.footer{
+	min-height:200px;
+	width:100%;
+	border-top:1px solid rgba(255, 255, 255, 0.2);
+	-moz-box-shadow: 0 -2px 1px rgba(0, 0, 0, .7);
+	-webkit-box-shadow:0 -2px 1px rgba(0, 0, 0, .7);
+
+	/* Gradient for Footer*/
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0.24) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.24)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0.24) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(0,0,0,0.24) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(0,0,0,0.24) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+	background: linear-gradient(top,  rgba(0,0,0,0.24) 0%,rgba(0,0,0,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+
+
+
+}
+.footer-inner{
+	padding-top:10px;
+	margin:0 auto;
+	width:400px;
+}
+.footer-inner a, #popup3 a{
+	color:#eee;
+	font-size:14px;
+	border-bottom: 1px dotted #ccc;
+	text-decoration:none;
+}
+.footer-inner li{
+	float:left;
+	margin-right:50px;
+}
+.footer-inner a:hover, #meet_team a:hover, #popup3 a:hover{
+	color: rgba(0, 0, 0, .5);
+	-webkit-text-shadow: 0 -1px 0 3px #fff;
+	-moz-text-shadow: 0 -1px 3px #fff;
+
+}
+
+
+/*  //////////////////////////////////////////////////// CSS popup /////////////////////////////////////////////////// */
+#fade {
+	display: none;
+	background: #000; 
+	position: fixed; left: 0; top: 0; 
+	z-index: 10;
+	width: 100%; height: 100%;
+	opacity: .80;
+	z-index: 9999;
+}
+.popup_block{
+	display: none;
+	background: url(../images/gray_sand.png);
+	padding: 20px; 	
+	border: 1px solid rgba(255, 255, 255, 0.7)
+	float: left;
+	font-size: 16px;
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 999999;
+	-moz-box-shadow: 0 -2px 1px rgba(0, 0, 0, .7);
+	-webkit-box-shadow:0 -2px 1px rgba(0, 0, 0, .7);
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	border-radius: 1px;
+}
+
+.poplight a:hover{color:silver;}
+.popup p {
+	padding: 5px 10px;
+	margin: 5px 0;
+}
+
+/*--Making IE6 Understand Fixed Positioning--*/
+*html #fade {
+	position: absolute;
+}
+*html .popup_block {
+	position: absolute;
+}		 
+
+/*  //////////////////////////////////////////////////// CSS Meet Team /////////////////////////////////////////////////// */
+.meet{
+	border-bottom:1px dotted rgba(255, 255, 255, .5); 
+	min-height:120px;
+}
+#meet_team img{
+	float:left;
+	display: block;
+	padding-right:10px;
+	margin-bottom:20px;
+}
+
+#meet_team h3, #popup3 h3{
+	font-size:18px;
+	color:#ccc;
+	margin-bottom:10px;
+
+
+
+}
+#makingOf{
+	overflow-y: scroll;
+	max-height: 768px;
+	max-width:960px;
+
+}
+#makingOf img{
+	width:100%;
+	margin-bottom:10px;
 }
