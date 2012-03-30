@@ -58,11 +58,11 @@ function get_hover_handler(value, circle) {
 
         /*option 3 plusieurs droites*/
         if (cy < centerY)
-            p = "M " + cx + " " + cy + " L" + cx + " " + "100 " + "L 875 65";
+            p = "M " + cx + " " + cy + " L" + cx + " " + "100 " + "L 875 75";
         else if (cx < centerX) /*en bas à gauche, ligne en trois partie partant vers la gauche */
-            p = "M " + cx + " " + cy + " L" + 100 + " " + cy + "L 100 100  L 875 65";
+            p = "M " + cx + " " + cy + " L" + 100 + " " + cy + "L 100 100  L 875 75";
         else
-            p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 65";
+            p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 75";
         var popupPath = paper.path(p);
 
         popupPath.attr({stroke:"#777", "stroke-opacity":".7", "stroke-width":"2"});
@@ -92,24 +92,24 @@ function create_graph(array, maxValue, radius, centerRadius, centerX, centerY, a
     var step = Math.PI * 2 / albumLength;
     pathString = "";
     var legendesTextesArray = new Array(
-        '<img src="http://fashx.com/wp-content/uploads/2012/01/spotify-logo.jpg" width="50" height="50"/><a href="www.google.com">Apple</a>',
-        '<div id="1994"><h4>1994</h4><h5>In numbers:</h5><ul><li>Physical album sales : $39.8 billion.</li><li>Concert ticket sales : $11.7 billion</li></ul><h5>Main events:</h5><img src="http://fashx.com/wp-content/uploads/2012/01/spotify-logo.jpg" width="50" height="50"/><p>Napster arrives, 2 billion files are shared and 80 million people use it.</p></div>',
-        'spotify',
-        'patate',
-        'steam',
-        'tomate',
-        'Apple2',
-        'Apple3',
-        'Apple4',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple',
-        'Apple');
+        '<div id="1994"><h4>1994</h4><h5>In numbers</h5><ul><li>Physical album sales : $39.8 billion</li><li>Concert ticket sales : $11.7 billion</li></ul><h5>Main events</h5><img src="images/icons/mp3.png" alt="MP3"/><p>The Mp3 is a pretty new format that makes it possible for music files to be compressed to a tenth of their original size while retaining a good sound quality. It starts spreading on the Internet.</p></div>',
+        '<div id="1995"><h4>1995</h4><h5>In numbers</h5><ul><li>Physical album sales : $39.7 billion</li><li>Concert ticket sales : $13.4 billion</li></ul></div>',
+        '<div id="1996"><h4>1996</h4><h5>In numbers</h5><ul><li>Physical album sales : $39.8 billion</li><li>Concert ticket sales : $12.8 billion</li></ul></div>',
+        '<div id="1997"><h4>1997</h4><h5>In numbers</h5><ul><li>Physical album sales : $38.5 billion</li><li>Concert ticket sales : $12.5 billion</li></ul></div>',
+        '<div id="1998"><h4>1998</h4><h5>In numbers</h5><ul><li>Physical album sales : $38.2 billion</li><li>Concert ticket sales : $13 billion</li></ul><h5>Main events</h5><img src="images/icons/napster.png" alt="Napster"/><p>Shawn Fanning releases <a href="http://en.wikipedia.org/wiki/Napster">Napster</a>. It allows users to easily share MP3 format songs for the first time. Even though it got shut down in 2001, it was the inspiration for many other <a href="http://en.wikipedia.org/wiki/Peer-to-peer_file_sharing">P2P sharing</a> sites.</p><img src="images/icons/emusic.png" alt="eMusic"/><p><a href="http://www.emusic.com/info/what-is-emusic-20/">eMusic</a> is established as one of the firsts online music store. With a monthly suscription, users can download a fixed amount of tracks.</p></div>',
+        '<div id="1999"><h4>1999</h4><h5>In numbers</h5><ul><li>Physical album sales : $38.6 billion</li><li>Concert ticket sales : $12.5 billion</li></ul></div>',
+        '<div id="2000"><h4>2000</h4><h5>In numbers</h5><ul><li>Physical album sales : $36.9 billion</li><li>Concert ticket sales : $12.8 billion</li></ul><h5>Main events</h5><img src="images/icons/napster.png" alt="Napster"/><p>A federal judge rules that Napster must remain offline until it can prevent copyrighted material from being shared by its users.</p><img src="images/icons/gnutella.png" alt="Gnutella"><p>Gnutella is developped in early 2000.  The source code is shared under the GNU Public License.</p><img src="images/icons/pandora.png" alt="Pandora"><p>Pandora Radio is an automated music recommendation service and "custodian" of the <a href="http://en.wikipedia.org/wiki/Music_Genome_Project">Music Genome Project</a> available only in the United States.</p><p>LimeWire uses the gnutella network as well as the BitTorrent protocol.</p></div>',
+        '<div id="2001"><h4>2001</h4><h5>In numbers</h5><ul><li>Physical album sales : $33.7 billion</li><li>Concert ticket sales : $13.5 billion</li></ul><h5>Main events</h5><img src="images/icons/p2p.png" alt="Peer-2-Peer"><p>FastTrack is a Peer-2-Peer protocol developped by Estonian programmers. It is used as a base for many coming sharing networks. </p><img src="images/icons/kazaa.png" alt="Kazaa"/><p>Kazaa is launched, using the FastTrack protocol. It quickly becomes the most used P2P network in the world with an average 3 000 000 people connected at any time. It will be closed in 2005. </p><img src="images/icons/bittorrent.png" alt="BitTorrent"/><p><a href="http://en.wikipedia.org/wiki/BitTorrent_(protocol)">BitTorrent</a> is released. It is used for distributing large amounts of data over the Internet. </p></div>',
+        '<div id="2002"><h4>2002</h4><h5>In numbers</h5><ul><li>Physical album sales : $32.2 billion</li><li>Concert ticket sales : $13.5 billion</li></ul></div>',
+        '<div id="2003"><h4>2003</h4><h5>In numbers</h5><ul><li>Physical album sales : $32 billion</li><li>Concert ticket sales : $13.7 billion</li></ul><h5>Main events</h5><img src="images/icons/riaa.png" alt"RIAA"/><p>The <a href="http://www.riaa.com/">RIAA</a> sues 261 individuals for allegedly distributing copyright music files over peer-to-peer networks.</p><img src="images/icons/myspace.png" alt="Myspace"><p>Myspace is a social networking service allowing artists to share their own music.</p><img src="images/icons/piratebay.png" alt="The Pirate Bay"><p><a href="http://piratbyran-in-eng.blogspot.com/">Piratbyrån ("The Pirate Bureau") </a> is a Swedish organization established to support people opposed to current ideas about intellectual property — by freely sharing information and culture. They created the Pirate Bay</p><img src="images/icons/itunes.png" alt="Itunes"/><p>Apple launches the Itunes Store, an online music store. It allows users to download music for 99c per song.</p><img src="images/icons/anonymous.png" alt"Anonymous"/><p><a href="http://en.wikipedia.org/wiki/Anonymous_(group)">Anonymous</a> is created as an Internet movement that exists as an anarchic, digitized global brain.</p></div>',
+        '<div id="2004"><h4>2004</h4><h5>In numbers</h5><ul><li>Physical album sales : $33.6 billion</li><li>Digital album sales : $0.38 billion</li><li>Concert ticket sales : $14.8 billion</li></ul><h5>Main events</h5><img src="images/icons/edonkey.png" alt="edonkey"/><p>eDonkey becomes the most widely used file sharing network on the Internet. Figures vary but it is bealieved to share 500 million to two billion files via 100 to 200 servers. </p><img src="images/icons/piratebay.png" alt="The Pirate Bay"><p>The Pirate Bay is launched. It is a Swedish website that hosts magnet links, which allow users to share files via BitTorrent. It calls itself "the galaxy\'s most resilient BitTorrent site".</p></div>',
+        '<div id="2005"><h4>2005</h4><h5>In numbers</h5><ul><li>Physical album sales : $33.5 billion</li><li>Digital album sales : $1.2 billion</li><li>Concert ticket sales : $15.2 billion</li></ul><h5>Main events</h5><img src="images/icons/utorrent.png" alt="utorrent"/><p>The program <a href="http://www.utorrent.com/">uTorrent</a> is released as a freeware on all OS platforms. It is very appreciated for its stability and performances.</p><img src="images/icons/megaupload.png" alt="megaupload"/><p>Megaupload was the biggest file hosting service, accounting for 1% of the total traffic on the Internet, and 50 million daily visitor. </p></div>',
+        '<div id="2006"><h4>2006</h4><h5>In numbers</h5><ul><li>Physical album sales : $31.9 billion</li><li>Digital album sales : $2.5 billion</li><li>Concert ticket sales : $16.6 billion</li></ul></div>',
+        '<div id="2007"><h4>2007</h4><h5>In numbers</h5><ul><li>Physical album sales : $30.6 billion</li><li>Digital album sales : $4.5 billion</li><li>Concert ticket sales : $18.1 billion</li></ul><h5>Main events</h5><img src="images/icons/itunes.png" alt="Itunes"/><p>Apple surpasses one billion iTunes downloads.</p></div>',
+        '<div id="2008"><h4>2008</h4><h5>In numbers</h5><ul><li>Physical album sales : $27.5 billion</li><li>Digital album sales : $7 billion</li><li>Concert ticket sales : $19.4 billion</li></ul><h5>Main events</h5><img src="images/icons/spotify.png" alt="Spotify"/><p><a href="http://www.spotify.com">Spotify</a> is a music streaming service offering streaming of selected music from a range of major and independent record labels, including Sony, EMI, Warner Music Group, and Universal. The service had approximately ten million users in 2010.</p><img src="images/icons/hadopi.png" alt="Hadopi"/><p>The Hadopi law is introduced to the French Senate. It is a "law promoting the distribution and protection of creative works on the internet". It allows the police to suspend the internet connection of someone suspected of piracy.</p></div>',
+        '<div id="2009"><h4>2009</h4><h5>In numbers</h5><ul><li>Physical album sales : $24.6 billion</li><li>Digital album sales : $10.7 billion </li><li>Concert ticket sales : 20.8 billion</li></ul><h5>Main events</h5><img src="images/icons/kazaa.png" alt="Kazaa"><p>Kazaa comes back as a legal music distribution platform. A monthly suscription allows the user to download MP3 music. It offers more than a million titles.</p><img src="images/icons/bittorrent.png" alt="BitTorrent"/><p>Peer-to-peer networks collectively are accounted for roughly 43% to 70% of all Internet traffic (depending on geographical location).</p><img src="images/icons/telecomix.png" alt="Telecomix"/><p><a href="http://telecomix.org/">Telecomix</a> is a decentralized cluster of net activists, committed to the freedom of expression. Telecomix circulated the ways of using landlines to circumvent state blockages of broadband networks during the Egyptian uprising of 2011.</p></div>',
+        '<div id="2010"><h4>2010</h4><h5>In numbers</h5><ul><li>Physical album sales : $22.2 billion</li><li>Digital album sales : $12.9 billion</li><li>Concert ticket sales : $22.2 billion</li></ul><h5>Main events</h5><img src="images/icons/limewire.png" alt="Limewire"/><p>Limewire is shut down by the United States Court, to get resurrectedto days later by a secret team of developers and dubbed <a href="http://en.wikipedia.org/wiki/Limewire_Pirate_Edition">Limewire Pirate Edition.</a></p></div>',
+        '<div id="2011"><h4>2011</h4><h5>In numbers</h5><ul><li>Physical album sales : $19.1 billion</li><li>Digital album sales : $14.8 billion</li><li>Concert ticket sales : $23.5 billion</li></ul><h5>Main events</h5><img src="images/icons/bittorrent.png" alt="BitTorrent"/><p>The BitTorrent protocal has 150 million active users. At any given instant of time BitTorrent has, on average, more active users than YouTube and Facebook combined.</p><img src="images/icons/piratebay.png" alt="The Pirate Bay"><p>The Pirate Bay hosts more than 4 million torrent files. According to the Los Angeles Times, TPB is "one of the world\'s largest facilitators of illegal downloading".</p><img src="images/icons/megaupload.png" alt="megaupload"/><p>MegaUpload gets shut down with a big media coverage. Many other file sharing site follow.</p><p>The <a href="http://en.wikipedia.org/wiki/Stop_Online_Piracy_Act">SOPA</a>, <a href="http://en.wikipedia.org/wiki/PROTECT_IP_Act">PIPA</a>, and <a href="http://en.wikipedia.org/wiki/Anti-Counterfeiting_Trade_Agreement">ACTA</a> laws are introduced to the world. They all aim to protect intellectual property against piracy, but are seen by many as a danger for online freedom of speech. Protests online and in big cities around the world finally put the laws on hold.</p></div>');
     for (var i = 0; i < albumLength; i++) {
         var angle = -(step * i + Math.PI);
         var sin = Math.sin(angle);
@@ -160,7 +160,6 @@ function reinit_all(industry) {
         /*ici, les données chargées devraient dépendre du paramètre industry : music, media, ....*/
         var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
             digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
-            livemusicSalesPath = create_graph(livemusicSales, maxValue, radius, centerRadius, centerX, centerY, false),
             musicIndustrySalesPath = create_graph(musicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, false),
             globalMusicIndustrySalesPath = create_graph(globalMusicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, true);
         // Drawing and styling the paths
@@ -294,6 +293,23 @@ $('#navigation a').on('click', function (event) {
     console.log(la_classe); /*ça va écrire music, media ou games dans la console parce que j'ai rajouté les classes sur votre navigation*/
     reinit_all(la_classe);
 });
+$('.music').trigger('click');
+$('#navigation a.music').on('click', function (){
+    $('#music_lgd').css('display','block');
+    $('#movie_lgd').css('display','none');
+    $('#games_lgd').css('display','none');
+
+});
+$('#navigation a.media').on('click', function (){
+    $('#movie_lgd').css('display','block');
+    $('#games_lgd').css('display','none');
+    $('#music_lgd').css('display','none');
+});
+$('#navigation a.games').on('click', function (){
+    $('#movie_lgd').css('display','none');
+    $('#music_lgd').css('display','none');
+    $('#games_lgd').css('display','block');
+});
+
 // Games sales style
 // Movie sales style
-
