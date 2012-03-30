@@ -108,7 +108,10 @@ a {
 	top:34.2%;
 	left:33.1%;
 }
-
+.gecko #canvas_container img{
+	top:34.2%;
+	left:45%;
+}
 .footer-inner a,.footer-inner a:hover,#navigation a,#navigation a:hover,#meet_team a,#meet_team a:hover,#popup3 a,#popup3 a:hover,#popup a,#popup a:hover,#navigation li,#navigation li:hover {
 	-webkit-transition: 0.2s linear;
 	-moz-transition: 0.2s linear;

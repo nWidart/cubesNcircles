@@ -2,7 +2,7 @@
 var paper = new Raphael(document.getElementById('canvas_container'), 1024, 768);
 var circles;
 var centerX = 460;
- var centerY = 384;
+var centerY = 384;
 
 // global variables.
 var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2, 32, 33.6, 33.5, 31.9, 30.6, 27.5, 24.6, 22.2, 19.1),
@@ -44,7 +44,8 @@ if (digitalSalesLength == musicIndustrySalesLength) {
 function get_hover_handler(value, circle) {
     return function (event) {
         var popup = $("#popup");
-        popup.css("display", "block");//pour faire apparaître la popup
+        //popup.css("display", "block");//pour faire apparaître la popup
+        popup.fadeIn(300);
         var popupNumber = $(this).parent().attr("title");
         var cx = circle.attr("cx");
         /*vous pouvez récupérer les coordonnées du centre du cercle comme ça, ça vous évite d'utiliser un tableau pour tout stocker*/
@@ -69,15 +70,22 @@ function get_hover_handler(value, circle) {
         /* ai rajouté stroke-width pour modifier la largeur du trait*/
         circle.pathToPopup = popupPath;
         /*je rajoute une variable au circle pour me rappeler du chemin dessiné , voir get_out_handler*/
-        popup.html("<div>" + value + "</div>");
+        popup.html("<div><a href='#' class='close_popup'>x</a>" + value + "</div>");
+        popup.on('click', function() {
+             $(this).on('click', function() {
+            //$('#popup').css("display","none");
+            //$(this).parrent().fadeOut();
+            $('#popup').fadeOut();
+            // alert("hello");
+    });
+        });
     };
 }
 
 function get_out_handler(circle) {
     return function (event) {
         circle.pathToPopup.remove();
-        // popupPath.remove(); Ne va pas
-    }
+    };
 }
 
 function hover_effect(circle) {
@@ -287,29 +295,27 @@ function reinit_all(industry) {
         });
     }
 }
+$(document).ready(function() {
+    $('#navigation a').on('click', function (event) {
+        var la_classe =  $(event.currentTarget).attr("class");
+        //console.log(la_classe); /*ça va écrire music, media ou games dans la console parce que j'ai rajouté les classes sur votre navigation*/
+        reinit_all(la_classe);
+    });
+    $('.music').trigger('click');
+    $('#navigation a.music').on('click', function (){
+        $('#music_lgd').css('display','block');
+        $('#movie_lgd').css('display','none');
+        $('#games_lgd').css('display','none');
 
-$('#navigation a').on('click', function (event) {
-    var la_classe =  $(event.currentTarget).attr("class");
-    console.log(la_classe); /*ça va écrire music, media ou games dans la console parce que j'ai rajouté les classes sur votre navigation*/
-    reinit_all(la_classe);
+    });
+    $('#navigation a.media').on('click', function (){
+        $('#movie_lgd').css('display','block');
+        $('#games_lgd').css('display','none');
+        $('#music_lgd').css('display','none');
+    });
+    $('#navigation a.games').on('click', function (){
+        $('#movie_lgd').css('display','none');
+        $('#music_lgd').css('display','none');
+        $('#games_lgd').css('display','block');
+    });
 });
-$('.music').trigger('click');
-$('#navigation a.music').on('click', function (){
-    $('#music_lgd').css('display','block');
-    $('#movie_lgd').css('display','none');
-    $('#games_lgd').css('display','none');
-
-});
-$('#navigation a.media').on('click', function (){
-    $('#movie_lgd').css('display','block');
-    $('#games_lgd').css('display','none');
-    $('#music_lgd').css('display','none');
-});
-$('#navigation a.games').on('click', function (){
-    $('#movie_lgd').css('display','none');
-    $('#music_lgd').css('display','none');
-    $('#games_lgd').css('display','block');
-});
-
-// Games sales style
-// Movie sales style
