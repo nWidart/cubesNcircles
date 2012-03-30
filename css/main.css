@@ -15,6 +15,10 @@
 body {
 	background:#eee url(../images/gray_sand.png);
 	font-family:verdana, geneva, sans-serif;
+	position: relative;
+}
+a {
+	cursor: pointer;
 }
 small{
 	text-align:center;
@@ -36,7 +40,6 @@ ul{
 }
 li{
 	margin-bottom:30px;
-		
 }
 /* Div's*/
 a{
@@ -44,25 +47,28 @@ a{
 }
 #navigation a{
 	font-weight:100;
-	color:#fff;
+	color:#eee;
 	font-size:24px;
-	display: block;
-	padding-left:30px;
-	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, .5);
-		-moz-box-shadow:0px 0px 10px rgba(0, 0, 0, .5);
-		box-shadow:0px 0px 10px rgba(0, 0, 0, .5);
-
-
+	padding-left:20px;
+}
+#navigation li{
+	border-left: 3px solid #ccc;
+	margin-left:20px;
+}
+#navigation li:hover{
+	border-left:4px solid #333;
+}
+#navigation li:focus{
+	border-left:4px solid #333;
 }
 
 .clear{clear:both;}
 
 #navigation a:hover{
-	padding-left:60px;
 }
 
 #navigation{
-	position: fixed; 
+	position: fixed;
 	left:0; top:200px;
 }
 #content{
@@ -74,7 +80,7 @@ a{
 }
 .canvas_container {
 	width: 100%;
-	margin: 50px 0px 40px 0px;
+	margin: -70px 0px 40px 0px;
 	padding: 20px;
 }
 .canvas_container:after {
@@ -83,43 +89,21 @@ a{
 	width: 261px; height: 261px;
 	z-index: 10;
 	position: absolute;
-	top:344px;
-	right: 755px;
+	top:324px;
+	right: 692px;
 }
 
-#popup{
-    min-height: 80px;
-    width: 250px;
-    margin:5px;
-    padding:  10px 0 0 10px;
-    position: absolute;
-    background: white;
-    display : none;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    border-radius:5px;
-    border:1px #fff solid;
-    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-    -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .3);
 
-    /* Gradient for popup box*/
- 	background: #e8e8e8; /* Old browsers */
-	background: -moz-linear-gradient(top,  #e8e8e8 48%, #cecdc6 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(48%,#e8e8e8), color-stop(100%,#cecdc6)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #e8e8e8 48%,#cecdc6 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #e8e8e8 48%,#cecdc6 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #e8e8e8 48%,#cecdc6 100%); /* IE10+ */
-	background: linear-gradient(top,  #e8e8e8 48%,#cecdc6 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#cecdc6',GradientType=0 ); /* IE6-9 */
-}
 
-.footer-inner a,.footer-inner a:hover,  #navigation a, #navigation a:hover, #meet_team a, #meet_team a:hover, #popup3 a, #popup3 a:hover, #popup a, #popup a:hover{
+
+
+.footer-inner a,.footer-inner a:hover,  #navigation a, #navigation a:hover, #meet_team a, #meet_team a:hover, #popup3 a, #popup3 a:hover, #popup a, #popup a:hover, #navigation li, #navigation li:hover{
 	-webkit-transition: 0.2s linear;
 	-moz-transition: 0.2s linear;
 	transition: 0.2s linear;
 }
 
-.footer-inner a, #meet_team a, #popup a,{
+.footer-inner a, #meet_team a, #popup a, .meet a{
 	text-decoration:none;
 	color:#eee;
 	font-size:14px;
@@ -147,7 +131,7 @@ a{
 .footer-inner{
 	padding-top:10px;
 	margin:0 auto;
-	width:400px;
+	width:735px;
 }
 .footer-inner a, #popup3 a{
 	color:#eee;
@@ -206,11 +190,11 @@ a{
 }
 *html .popup_block {
 	position: absolute;
-}		 
+}
 
 /*  //////////////////////////////////////////////////// CSS Meet Team /////////////////////////////////////////////////// */
 .meet{
-	border-bottom:1px dotted rgba(255, 255, 255, .5); 
+	border-bottom:1px dotted rgba(255, 255, 255, .5);
 	min-height:120px;
 }
 #meet_team img{
@@ -230,11 +214,121 @@ a{
 }
 #makingOf{
 	overflow-y: scroll;
-	max-height: 768px;
+	max-height: 568px;
 	max-width:960px;
 
 }
 #makingOf img{
 	width:100%;
 	margin-bottom:10px;
+}
+
+/* //////////////////////////////// pop up box #popup /////////////////// */
+#popup{
+    min-height: 80px;
+    width: 305px;
+    margin:5px;
+    padding:  10px;
+    position: absolute;
+    display : none;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    border:1px #fff solid;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+    -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, .3);
+    top: 143px;
+    right: -200px;
+
+    /* Gradient for popup box*/
+ 	background: #e8e8e8 url(../images/fabric_1.png);
+}
+#popup img{
+	float:left;
+	margin-right:10px;
+}
+#popup ul{
+	clear:both;
+}
+#popup h4{
+	font-size:60px;
+	color:#6a8195;
+	text-align:center;
+	margin-bottom:10px;
+	border-bottom: 2px dotted #ccc;
+	padding-bottom:10px;
+	text-shadow:1px 1px 0px rgba(0, 0, 0, .7);
+
+}
+#popup h5{
+	font-size:24px;
+	text-align:left;
+	border-bottom:1px solid #ddd;
+	margin-bottom:10px;
+	color:#bbb;
+	padding-bottom:5px;
+	text-shadow:1px 1px 0px rgba(0, 0, 0, .3)
+
+}
+#popup4{
+	color:#ccc;
+	font-size:14px;
+	font-weight:100;
+}
+#popup4 p{
+	line-height:1.2;
+	margin-bottom:10px;
+}
+
+#popup li, #popup p{
+	font-size:14px;
+	/*text-shadow:1px 1px 0px rgba(0, 0, 0, .1);*/
+	color:#333;
+}
+#legend{
+	float:left;
+	margin-top:540px;
+}
+#legend li{
+	color:#ccc;
+	font-size:14px;
+}
+#legend span{
+	width:25px;
+	height:15px;
+	display: block;
+	float:left;
+	margin-right:10px;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .7);
+	-moz-border-radius: 2px;
+	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, .7);
+
+}
+.record_lgd{
+	background:#007E9A;
+}
+.liveticket_lgd{
+	background:#F5A400;
+}
+.digital_lgd{
+	background:#A9121D;
+}
+.vod_lgd{
+	background:#913402;
+}
+.boxoffice_lgd{
+	background:#685D47;
+}
+.game_lgd{
+	background:#f2b807;
+}
+.console_lgd{
+	background:#6A2EA6;
+}
+#movie_lgd{
+	display:none;
+}
+#games_lgd{
+	display: none;
 }
