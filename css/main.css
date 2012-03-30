@@ -92,17 +92,21 @@ a {
 	width: 100%;
 	margin: -70px 0px 40px 0px;
 	padding: 20px;
+	position: relative;
 }
-
 .canvas_container:after {
 	content: '';
-	background: url('../images/music.png');
-	width: 261px;
-	height: 261px;
+/*	background: url('../images/svg.png');*/
+	width: 261px; height: 261px;
 	z-index: 10;
 	position: absolute;
-	top: 324px;
+	top:324px;
 	right: 692px;
+}
+#canvas_container img{
+	position: absolute;
+	top:34.2%;
+	left:33.1%;
 }
 
 .footer-inner a,.footer-inner a:hover,#navigation a,#navigation a:hover,#meet_team a,#meet_team a:hover,#popup3 a,#popup3 a:hover,#popup a,#popup a:hover,#navigation li,#navigation li:hover {
