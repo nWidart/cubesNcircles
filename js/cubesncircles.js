@@ -275,6 +275,18 @@ function reinit_all(industry) {
             .animate({
                 "fill-opacity":"1"
             }, 1000, "ease-in");
+        $(mtp.node).on('mouseenter', function() {
+            mtp.animate({
+                "fill":"#b94203"
+            },300);
+            $('.dvdvod').css("font-weight","bold");
+        });
+        $(mtp.node).on('mouseleave', function() {
+            mtp.animate({
+                "fill":"#913402"
+            },300);
+            $('.dvdvod').css("font-weight","normal");
+        });
         var dvp = paper.path(movieTicketsPath)
             .attr({
                 "stroke-width":0,
@@ -284,6 +296,18 @@ function reinit_all(industry) {
             .animate({
                 "fill-opacity":"1"
             }, 2000, "ease-in");
+        $(dvp.node).on('mouseenter', function() {
+            dvp.animate({
+                "fill":"#b8a57e"
+            },300);
+            $('.boxoffice').css("font-weight","bold");
+        });
+        $(dvp.node).on('mouseleave', function() {
+            dvp.animate({
+                "fill":"#685D47"
+            },300);
+            $('.boxoffice').css("font-weight","normal");
+        });
     $.each(circles, function (i, c) {
         c.toFront();
         c.animate({'fill':'#666'}, 1000);
@@ -314,6 +338,18 @@ function reinit_all(industry) {
             .animate({
                 "fill-opacity":"1"
             }, 1000, "ease-in");
+        $(gsp.node).on('mouseenter', function() {
+            gsp.animate({
+                "fill":"#fcd04a"
+            },300);
+            $('.games_legend').css("font-weight","bold");
+        });
+        $(gsp.node).on('mouseleave', function() {
+            gsp.animate({
+                "fill":"#f2b807"
+            },300);
+            $('.games_legend').css("font-weight","normal");
+        });
         var gcp = paper.path(gameConsolePath)
             .attr({
                 "stroke-width":0,
@@ -323,6 +359,18 @@ function reinit_all(industry) {
             .animate({
                 "fill-opacity":"1"
             }, 2000, "ease-in");
+        $(gcp.node).on('mouseenter', function() {
+            gcp.animate({
+                "fill":"#923fe4"
+            },300);
+            $('.consolegames').css("font-weight","bold");
+        });
+        $(gcp.node).on('mouseleave', function() {
+            gcp.animate({
+                "fill":"#6A2EA6"
+            },300);
+            $('.consolegames').css("font-weight","normal");
+        });
         $.each(circles, function (i, c) {
         c.toFront();
         c.animate({'fill':'#666'}, 1000);
