@@ -53,6 +53,9 @@ function get_hover_handler(value, circle) {
         /*vous pouvez récupérer les coordonnées du centre du cercle comme ça, ça vous évite d'utiliser un tableau pour tout stocker*/
         var cy = circle.attr("cy");
         var p;
+        circle.attr({
+            "fill":"#fbfbfb"
+        });
         /*option 1:  simple droite */
         // p = "M " + cx + " " + cy+ "L 875 65";
 
@@ -68,7 +71,7 @@ function get_hover_handler(value, circle) {
             p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 79";
         var popupPath = paper.path(p);
 
-        popupPath.attr({stroke:"#777", "stroke-opacity":".7", "stroke-width":"2"});
+        popupPath.attr({stroke:"#fbfbfb", "stroke-opacity":".7", "stroke-width":"2"});
         circle.pathToPopup = popupPath;
         /*je rajoute une variable au circle pour me rappeler du chemin dessiné , voir get_out_handler*/
         popup.html("<div><a href='#' class='close_popup'>x</a>" + value + "</div>");
@@ -84,6 +87,7 @@ function get_hover_handler(value, circle) {
 function get_out_handler(circle) {
     return function (event) {
         circle.pathToPopup.remove();
+        circle.attr({"fill":"#666"});
     };
 }
 
