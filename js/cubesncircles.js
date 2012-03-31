@@ -1,8 +1,8 @@
 // creation of the canvas
-var paper = new Raphael(document.getElementById('canvas_container'), 1024, 768);
-var circles;
-var centerX = 460;
-var centerY = 384;
+var paper = new Raphael(document.getElementById('canvas_container'), 1024, 768),
+    circles,
+    centerX = 460,
+    centerY = 384;
 
 // global variables.
 var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2, 32, 33.6, 33.5, 31.9, 30.6, 27.5, 24.6, 22.2, 19.1),
@@ -12,7 +12,7 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     gameSales = new Array(14, 12, 15, 18, 19, 20, 14.7, 20, 27, 23, 25.4, 29, 31.6, 41.7, 54, 60.4, 61.2, 62.5),
     movieTickets = new Array(5.1,5.29,5.59,6.77,7.3,7.48,8.13,9.7,13.5,16.4,17.8,21,25.5,26.3,27.7,29.4,31.8,32.5),
     dvdVod = new Array(22.75,25.11,35.61,36.23,38.7,43.52,43.87,53.4,52.2,59.6,64.2,61.3,55.5,55.3,52.3,52.6,55.2,54.7),
-    gamesConsole = new Array(8.7,9,9.5,11,16,17.3,18.5,20,21.88,23.3,26.33,27.67,31.63,37.47,41.46,44.23,46.72,48.88);
+    gamesConsole = new Array(8.7,9,9.5,11,16,17.3,18.5,20,21.88,23.3,26.33,27.67,31.63,37.47,41.46,44.23,46.72,48.88),
     maxValue = 90, // valeur maximum
     radius = 190, // rayon du cercle
     centerRadius = 130,
@@ -26,12 +26,14 @@ var recordSales = new Array(39.8, 39.7, 39.8, 38.5, 38.2, 38.6, 36.9, 33.7, 32.2
     globalMusicIndustrySales = new Array(),
     popupPath = '';
 
+// On aditione les Albums Sales avec les live music sales (concerts)
 if (albumSalesLength == liveMusicSalesLength) {
     for (var i = 0; i < albumSalesLength; i++) {
         var sum = recordSales[i] + livemusicSales[i];
         musicIndustrySales.push(sum);
     }
 }
+// On aditione les résultats du précédent calcule avec les ventes digitales
 var musicIndustrySalesLength = musicIndustrySales.length;
 if (digitalSalesLength == musicIndustrySalesLength) {
     for (var i = 0; i < digitalSalesLength; i++) {
@@ -40,7 +42,7 @@ if (digitalSalesLength == musicIndustrySalesLength) {
     }
 }
 
-//popups hover
+// Création des pop-ups
 function get_hover_handler(value, circle) {
     return function (event) {
         var popup = $("#popup");
@@ -51,7 +53,7 @@ function get_hover_handler(value, circle) {
         /*vous pouvez récupérer les coordonnées du centre du cercle comme ça, ça vous évite d'utiliser un tableau pour tout stocker*/
         var cy = circle.attr("cy");
         var p;
-        /*option 1:  votre droite */
+        /*option 1:  simple droite */
         // p = "M " + cx + " " + cy+ "L 875 65";
 
         /*option 2 la courbe*/
@@ -59,29 +61,26 @@ function get_hover_handler(value, circle) {
 
         /*option 3 plusieurs droites*/
         if (cy < centerY)
-            p = "M " + cx + " " + cy + " L" + cx + " " + "100 " + "L 875 75";
+            p = "M " + cx + " " + cy + " L" + cx + " " + "100 " + "L 875 79";
         else if (cx < centerX) /*en bas à gauche, ligne en trois partie partant vers la gauche */
-            p = "M " + cx + " " + cy + " L" + 100 + " " + cy + "L 100 100  L 875 75";
+            p = "M " + cx + " " + cy + " L" + 100 + " " + cy + "L 100 100  L 875 79";
         else
-            p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 75";
+            p = "M " + cx + " " + cy + " L" + 800 + " " + cy + "L 800 100  L 875 79";
         var popupPath = paper.path(p);
 
         popupPath.attr({stroke:"#777", "stroke-opacity":".7", "stroke-width":"2"});
-        /* ai rajouté stroke-width pour modifier la largeur du trait*/
         circle.pathToPopup = popupPath;
         /*je rajoute une variable au circle pour me rappeler du chemin dessiné , voir get_out_handler*/
         popup.html("<div><a href='#' class='close_popup'>x</a>" + value + "</div>");
+        // On ferme le popup au clic du X
         popup.on('click', function() {
              $(this).on('click', function() {
-            //$('#popup').css("display","none");
-            //$(this).parrent().fadeOut();
-            $('#popup').fadeOut();
-            // alert("hello");
-    });
+                $('#popup').fadeOut();
+            });
         });
     };
 }
-
+// Supression du path qui va vers le pop up
 function get_out_handler(circle) {
     return function (event) {
         circle.pathToPopup.remove();
@@ -165,52 +164,87 @@ function reinit_all(industry) {
             el.rotate(i * 20, centerX, centerY);
         }
     }
-        /*ici, les données chargées devraient dépendre du paramètre industry : music, media, ....*/
-        var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
-            digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
-            musicIndustrySalesPath = create_graph(musicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, false),
-            globalMusicIndustrySalesPath = create_graph(globalMusicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, true);
-        // Drawing and styling the paths
-        // Record sales style
-        var second = paper.path(recordSalesPath)
-            .toBack()
-            .attr({
-                "stroke-width":0,
-                "fill":"#007E9A", // bleu
-                "fill-opacity":"0"
-            })
-            .animate({
-                "fill-opacity":"1"
-            }, 1000, "ease-in");
+    var recordSalesPath = create_graph(recordSales, maxValue, radius, centerRadius, centerX, centerY, false),
+        digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
+        musicIndustrySalesPath = create_graph(musicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, false),
+        globalMusicIndustrySalesPath = create_graph(globalMusicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, true);
+    // Drawing and styling the paths
+    // Record sales style
+    var second = paper.path(recordSalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"#007E9A", // bleu
+            "fill-opacity":"0"
+        })
+        .animate({
+            "fill-opacity":"1"
+        }, 1000, "ease-in");
+    $(second.node).on('mouseenter', function() {
+        second.animate({
+            "fill":"#00abd1"
+        },300);
+        $('.record').css("font-weight","bold");
+    });
+    $(second.node).on('mouseleave', function() {
+        second.animate({
+            "fill":"#007E9A"
+        },300);
+        $('.record').css("font-weight","normal");
+    });
 
-        // music industry sales style
-        var third = paper.path(musicIndustrySalesPath)
-            .toBack()
-            .attr({
-                "stroke-width":0,
-                "fill":"#F5A400", // red
-                "fill-opacity":"0"
-            })
-            .animate({
-                "fill-opacity":"1"
-            }, 2000, "ease-in");
-        // global music industry sales style
-        var forth = paper.path(globalMusicIndustrySalesPath)
-            .toBack()
-            .attr({
-                "stroke-width":0,
-                "fill":"#A9121D", // red
-                "fill-opacity":"0"
-            }).animate({
-                "fill-opacity":"1"
-            }, 3000, "ease-in");
-        // remplir le cercle du centre (noir)
-        paper.circle(centerX, centerY, centerRadius)
-            .attr({
-                fill:"#333",
-                stroke:"none"
-            });
+    // music industry sales style
+    var third = paper.path(musicIndustrySalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"#F5A400", // red
+            "fill-opacity":"0"
+        })
+        .animate({
+            "fill-opacity":"1"
+        }, 2000, "ease-in");
+    $(third.node).on('mouseenter', function() {
+        third.animate({
+            "fill":"#ffb520"
+        },300);
+        $('.liveticket').css("font-weight","bold");
+    });
+    $(third.node).on('mouseleave', function() {
+        third.animate({
+            "fill":"#F5A400"
+        },300);
+        $('.liveticket').css("font-weight","normal");
+    });
 
+    // global music industry sales style
+    var forth = paper.path(globalMusicIndustrySalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "fill":"#A9121D", // red
+            "fill-opacity":"0"
+        }).animate({
+            "fill-opacity":"1"
+        }, 3000, "ease-in");
+    $(forth.node).on('mouseenter', function() {
+        forth.animate({
+            "fill":"#dc1726"
+        },300);
+        $('.digital').css("font-weight","bold");
+    });
+    $(forth.node).on('mouseleave', function() {
+        forth.animate({
+            "fill":"#A9121D"
+        },300);
+        $('.digital').css("font-weight","normal");
+    });
+    // remplir le cercle du centre (noir)
+    paper.circle(centerX, centerY, centerRadius)
+        .attr({
+            fill:"#333",
+            stroke:"none"
+        });
 
     $.each(circles, function (i, c) {
         c.toFront();
@@ -303,19 +337,21 @@ $(document).ready(function() {
     });
     $('.music').trigger('click');
     $('#navigation a.music').on('click', function (){
-        $('#music_lgd').css('display','block');
+        // $('#music_lgd').css('display','block');
+        $('#music_lgd').fadeIn(400);
         $('#movie_lgd').css('display','none');
         $('#games_lgd').css('display','none');
-
     });
     $('#navigation a.media').on('click', function (){
-        $('#movie_lgd').css('display','block');
+        $('#movie_lgd').fadeIn(500);
         $('#games_lgd').css('display','none');
         $('#music_lgd').css('display','none');
+        $('#popup').fadeOut();
     });
     $('#navigation a.games').on('click', function (){
         $('#movie_lgd').css('display','none');
         $('#music_lgd').css('display','none');
-        $('#games_lgd').css('display','block');
+        $('#games_lgd').fadeIn(500);
+        $('#popup').fadeOut();
     });
 });
