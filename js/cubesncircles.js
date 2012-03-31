@@ -305,7 +305,7 @@ function reinit_all(industry) {
         second.animate({
             "fill":"#00abd1"
         },300);
-        $('.record').css("font-weight","bold");
+        $('.record').css({"font-weight":"bold"});
         third.animate({
             "fill":"#404040"
         },400);
@@ -320,7 +320,10 @@ function reinit_all(industry) {
             second.animate({
                 "fill":"#00abd1"
             },300);
-            $('.record').css("font-weight","bold");
+            $('.record').css({
+                "font-weight":"bold",
+                color:"#007E9A"
+            });
             third.animate({
                 "fill":"#404040"
             },400);
@@ -332,7 +335,10 @@ function reinit_all(industry) {
             second.animate({
                 "fill":"#007E9A"
             },300);
-            $('.record').css("font-weight","normal");
+            $('.record').css({
+                "font-weight":"normal",
+                color: "#ccc"
+            });
             third.animate({
                 "fill":"#F5A400"
             },400);
@@ -376,7 +382,10 @@ function reinit_all(industry) {
                 third.animate({
                 "fill":"#ffb520"
             },300);
-            $('.liveticket').css("font-weight","bold");
+            $('.liveticket').css({
+                "font-weight":"bold",
+                color : "#F5A400"
+            });
             second.animate({
                 "fill":"#404040"
             },400);
@@ -388,7 +397,10 @@ function reinit_all(industry) {
             third.animate({
                 "fill":"#F5A400"
             },300);
-            $('.liveticket').css("font-weight","normal");
+            $('.liveticket').css({
+                "font-weight":"normal",
+                color: "#ccc"
+            });
             second.animate({
                 "fill":"#007E9A"
             },400);
@@ -432,7 +444,10 @@ function reinit_all(industry) {
             forth.animate({
                 "fill":"#dc1726"
             },300);
-            $('.digital').css("font-weight","bold");
+            $('.digital').css({
+                "font-weight":"bold",
+                color : "#A9121D"
+            });
             second.animate({
                 "fill":"#404040"
             },400);
@@ -444,7 +459,10 @@ function reinit_all(industry) {
             forth.animate({
                 "fill":"#A9121D"
             },300);
-            $('.digital').css("font-weight","normal");
+            $('.digital').css({
+                "font-weight":"normal",
+                color : "#ccc"
+            });
             second.animate({
                 "fill":"#007E9A"
             },400);
@@ -583,7 +601,10 @@ function reinit_all(industry) {
                     mtp.animate({
                     "fill":"#b94203"
                 },300);
-                $('.dvdvod').css("font-weight","bold");
+                $('.dvdvod').css({
+                    "font-weight":"bold",
+                    color: "913402"
+                });
                 dvp.animate({
                     "fill":"#404040"
                 },400);
@@ -592,7 +613,10 @@ function reinit_all(industry) {
                 mtp.animate({
                     "fill":"#913402"
                 },300);
-                $('.dvdvod').css("font-weight","normal");
+                $('.dvdvod').css({
+                    "font-weight":"normal",
+                    color: "#ccc"
+                });
                 dvp.animate({
                     "fill":"#685D47"
                 },400);
@@ -627,7 +651,10 @@ function reinit_all(industry) {
                 dvp.animate({
                     "fill":"#b8a57e"
                 },300);
-                $('.boxoffice').css("font-weight","bold");
+                $('.boxoffice').css({
+                    "font-weight":"bold",
+                    color: "#685D47"
+                });
                 mtp.animate({
                     "fill":"#404040"
                 },400);
@@ -636,7 +663,10 @@ function reinit_all(industry) {
                 dvp.animate({
                     "fill":"#685D47"
                 },300);
-                $('.boxoffice').css("font-weight","normal");
+                $('.boxoffice').css({
+                    "font-weight":"normal",
+                    color: "#ccc"
+                });
                 mtp.animate({
                     "fill":"#913402"
                 },400);
@@ -762,7 +792,10 @@ function reinit_all(industry) {
                     gsp.animate({
                     "fill":"#fcd04a"
                 },300);
-                $('.games_legend').css("font-weight","bold");
+                $('.games_legend').css({
+                    "font-weight":"bold",
+                    color: "#f2b807"
+                });
                 gcp.animate({
                     "fill":"#404040"
                 },400);
@@ -771,7 +804,10 @@ function reinit_all(industry) {
                 gsp.animate({
                     "fill":"#f2b807"
                 },300);
-                $('.games_legend').css("font-weight","normal");
+                $('.games_legend').css({
+                    "font-weight":"normal",
+                    color : "#ccc"
+                });
                 gcp.animate({
                     "fill":"#6A2EA6"
                 },400);
@@ -806,7 +842,10 @@ function reinit_all(industry) {
                 gcp.animate({
                     "fill":"#923fe4"
                 },300);
-                $('.consolegames').css("font-weight","bold");
+                $('.consolegames').css({
+                    "font-weight":"bold",
+                    color : "#6A2EA6"
+                });
                 gsp.animate({
                     "fill":"#404040"
                 },400);
@@ -815,7 +854,10 @@ function reinit_all(industry) {
                 gcp.animate({
                     "fill":"#6A2EA6"
                 },300);
-                $('.consolegames').css("font-weight","normal");
+                $('.consolegames').css({
+                    "font-weight":"normal",
+                    color: "#ccc"
+                });
                 gsp.animate({
                     "fill":"#f2b807"
                 },400);
