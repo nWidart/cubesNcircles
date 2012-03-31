@@ -79,6 +79,9 @@ function get_hover_handler(value, circle) {
         popup.on('click', function() {
              $(this).on('click', function() {
                 $('#popup').fadeOut();
+                // on change seulement la couleur du cercle quand on ferme le popup.
+                // Marche pas avec la multi sélection..
+                circle.attr({"fill":"#666"});
             });
         });
     };
@@ -87,7 +90,7 @@ function get_hover_handler(value, circle) {
 function get_out_handler(circle) {
     return function (event) {
         circle.pathToPopup.remove();
-        circle.attr({"fill":"#666"});
+        //circle.attr({"fill":"#666"});
     };
 }
 
@@ -196,6 +199,18 @@ function reinit_all(industry) {
         },300);
         $('.record').css("font-weight","normal");
     });
+    $('.record').on ('mouseenter', function() {
+        second.animate({
+            "fill":"#00abd1"
+        },300);
+        $('.record').css("font-weight","bold");
+    });
+    $('.record').on ('mouseleave', function() {
+        second.animate({
+            "fill":"#007E9A"
+        },300);
+        $('.record').css("font-weight","normal");
+    });
 
     // music industry sales style
     var third = paper.path(musicIndustrySalesPath)
@@ -220,7 +235,18 @@ function reinit_all(industry) {
         },300);
         $('.liveticket').css("font-weight","normal");
     });
-
+    $('.liveticket').on ('mouseenter', function() {
+        third.animate({
+            "fill":"#ffb520"
+        },300);
+        $('.liveticket').css("font-weight","bold");
+    });
+    $('.liveticket').on ('mouseleave', function() {
+        third.animate({
+            "fill":"#F5A400"
+        },300);
+        $('.liveticket').css("font-weight","normal");
+    });
     // global music industry sales style
     var forth = paper.path(globalMusicIndustrySalesPath)
         .toBack()
@@ -238,6 +264,18 @@ function reinit_all(industry) {
         $('.digital').css("font-weight","bold");
     });
     $(forth.node).on('mouseleave', function() {
+        forth.animate({
+            "fill":"#A9121D"
+        },300);
+        $('.digital').css("font-weight","normal");
+    });
+    $('.digital').on ('mouseenter', function() {
+        forth.animate({
+            "fill":"#dc1726"
+        },300);
+        $('.digital').css("font-weight","bold");
+    });
+    $('.digital').on ('mouseleave', function() {
         forth.animate({
             "fill":"#A9121D"
         },300);
@@ -291,6 +329,19 @@ function reinit_all(industry) {
             },300);
             $('.dvdvod').css("font-weight","normal");
         });
+        $('.dvdvod').on ('mouseenter', function() {
+            mtp.animate({
+                "fill":"#b94203"
+            },300);
+            $('.dvdvod').css("font-weight","bold");
+        });
+        $('.dvdvod').on ('mouseleave', function() {
+            mtp.animate({
+                "fill":"#913402"
+            },300);
+            $('.dvdvod').css("font-weight","normal");
+        });
+
         var dvp = paper.path(movieTicketsPath)
             .attr({
                 "stroke-width":0,
@@ -312,6 +363,19 @@ function reinit_all(industry) {
             },300);
             $('.boxoffice').css("font-weight","normal");
         });
+        $('.boxoffice').on ('mouseenter', function() {
+            dvp.animate({
+                "fill":"#b8a57e"
+            },300);
+            $('.boxoffice').css("font-weight","bold");
+        });
+        $('.boxoffice').on ('mouseleave', function() {
+            dvp.animate({
+                "fill":"#685D47"
+            },300);
+            $('.boxoffice').css("font-weight","normal");
+        });
+
     $.each(circles, function (i, c) {
         c.toFront();
         c.animate({'fill':'#666'}, 1000);
@@ -354,6 +418,19 @@ function reinit_all(industry) {
             },300);
             $('.games_legend').css("font-weight","normal");
         });
+        $('.games_legend').on ('mouseenter', function() {
+            gsp.animate({
+                "fill":"#fcd04a"
+            },300);
+            $('.games_legend').css("font-weight","bold");
+        });
+        $('.games_legend').on ('mouseleave', function() {
+            gsp.animate({
+                "fill":"#f2b807"
+            },300);
+            $('.games_legend').css("font-weight","normal");
+        });
+
         var gcp = paper.path(gameConsolePath)
             .attr({
                 "stroke-width":0,
@@ -375,6 +452,19 @@ function reinit_all(industry) {
             },300);
             $('.consolegames').css("font-weight","normal");
         });
+        $('.consolegames').on ('mouseenter', function() {
+            gcp.animate({
+                "fill":"#923fe4"
+            },300);
+            $('.consolegames').css("font-weight","bold");
+        });
+        $('.consolegames').on ('mouseleave', function() {
+            gcp.animate({
+                "fill":"#6A2EA6"
+            },300);
+            $('.consolegames').css("font-weight","normal");
+        });
+
         $.each(circles, function (i, c) {
         c.toFront();
         c.animate({'fill':'#666'}, 1000);
@@ -393,17 +483,18 @@ $(document).ready(function() {
         $('#music_lgd').fadeIn(400);
         $('#movie_lgd').css('display','none');
         $('#games_lgd').css('display','none');
+        $('#popup').fadeOut(200);
     });
     $('#navigation a.media').on('click', function (){
         $('#movie_lgd').fadeIn(500);
         $('#games_lgd').css('display','none');
         $('#music_lgd').css('display','none');
-        $('#popup').fadeOut();
+        $('#popup').fadeOut(200);
     });
     $('#navigation a.games').on('click', function (){
         $('#movie_lgd').css('display','none');
         $('#music_lgd').css('display','none');
         $('#games_lgd').fadeIn(500);
-        $('#popup').fadeOut();
+        $('#popup').fadeOut(200);
     });
 });
