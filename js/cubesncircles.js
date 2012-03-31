@@ -90,7 +90,7 @@ function get_hover_handler(value, circle) {
 function get_out_handler(circle) {
     return function (event) {
         circle.pathToPopup.remove();
-        //circle.attr({"fill":"#666"});
+        circle.attr({"fill":"#666"});
     };
 }
 
@@ -175,113 +175,302 @@ function reinit_all(industry) {
         digitalSalesPath = create_graph(digitalSales, maxValue, radius, centerRadius, centerX, centerY, false),
         musicIndustrySalesPath = create_graph(musicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, false),
         globalMusicIndustrySalesPath = create_graph(globalMusicIndustrySales, maxValue, radius, centerRadius, centerX, centerY, true);
-    // Drawing and styling the paths
+
+    /* ------------------------------------------------------------------------------------------------------------------------
+     * Drawing PATHS
+     */
     // Record sales style
     var second = paper.path(recordSalesPath)
         .toBack()
         .attr({
             "stroke-width":0,
+            "stroke":"none",
             "fill":"#007E9A", // bleu
             "fill-opacity":"0"
         })
         .animate({
             "fill-opacity":"1"
         }, 1000, "ease-in");
-    $(second.node).on('mouseenter', function() {
-        second.animate({
-            "fill":"#00abd1"
-        },300);
-        $('.record').css("font-weight","bold");
-    });
-    $(second.node).on('mouseleave', function() {
-        second.animate({
-            "fill":"#007E9A"
-        },300);
-        $('.record').css("font-weight","normal");
-    });
-    $('.record').on ('mouseenter', function() {
-        second.animate({
-            "fill":"#00abd1"
-        },300);
-        $('.record').css("font-weight","bold");
-    });
-    $('.record').on ('mouseleave', function() {
-        second.animate({
-            "fill":"#007E9A"
-        },300);
-        $('.record').css("font-weight","normal");
-    });
 
     // music industry sales style
     var third = paper.path(musicIndustrySalesPath)
         .toBack()
         .attr({
             "stroke-width":0,
-            "fill":"#F5A400", // red
+            "stroke":"none",
+            "fill":"#F5A400", // yellow
             "fill-opacity":"0"
         })
         .animate({
             "fill-opacity":"1"
         }, 2000, "ease-in");
+
+    // global music industry sales style
+    var forth = paper.path(globalMusicIndustrySalesPath)
+        .toBack()
+        .attr({
+            "stroke-width":0,
+            "stroke":"none",
+            "fill":"#A9121D", // red
+            "fill-opacity":"0"
+        }).animate({
+            "fill-opacity":"1"
+        }, 3000, "ease-in");
+
+    /* ------------------------------------------------------------------------------------------------------------------------
+     * Hover state on the graph (music)
+     */
+    // Record sales
+     $(second.node).on('mouseenter', function() {
+        second.animate({
+            "fill":"#00abd1"
+        },300);
+        $('.record').css("font-weight","bold");
+        third.animate({
+            "fill":"#404040"
+        },400);
+        forth.animate({
+            "fill":"#404040"
+        },400);
+    });
+    $(second.node).on('mouseleave', function() {
+        second.animate({
+            "fill":"#007E9A"
+        },300);
+        $('.record').css("font-weight","normal");
+        third.animate({
+            "fill":"#F5A400"
+        },400);
+        forth.animate({
+            "fill":"#A9121D"
+        },400);
+    });
+
+    // Live Ticket Sales
     $(third.node).on('mouseenter', function() {
         third.animate({
             "fill":"#ffb520"
         },300);
         $('.liveticket').css("font-weight","bold");
+        second.animate({
+            "fill":"#404040"
+        },400);
+        forth.animate({
+            "fill":"#404040"
+        },400);
     });
     $(third.node).on('mouseleave', function() {
         third.animate({
             "fill":"#F5A400"
         },300);
         $('.liveticket').css("font-weight","normal");
+        second.animate({
+            "fill":"#007E9A"
+        },400);
+        forth.animate({
+            "fill":"#A9121D"
+        },400);
     });
-    $('.liveticket').on ('mouseenter', function() {
-        third.animate({
-            "fill":"#ffb520"
-        },300);
-        $('.liveticket').css("font-weight","bold");
-    });
-    $('.liveticket').on ('mouseleave', function() {
-        third.animate({
-            "fill":"#F5A400"
-        },300);
-        $('.liveticket').css("font-weight","normal");
-    });
-    // global music industry sales style
-    var forth = paper.path(globalMusicIndustrySalesPath)
-        .toBack()
-        .attr({
-            "stroke-width":0,
-            "fill":"#A9121D", // red
-            "fill-opacity":"0"
-        }).animate({
-            "fill-opacity":"1"
-        }, 3000, "ease-in");
+
+    // Digital Sales
     $(forth.node).on('mouseenter', function() {
         forth.animate({
             "fill":"#dc1726"
         },300);
         $('.digital').css("font-weight","bold");
+        second.animate({
+            "fill":"#404040"
+        },400);
+        third.animate({
+            "fill":"#404040"
+        },400);
     });
     $(forth.node).on('mouseleave', function() {
         forth.animate({
             "fill":"#A9121D"
         },300);
         $('.digital').css("font-weight","normal");
+        second.animate({
+            "fill":"#007E9A"
+        },400);
+        third.animate({
+            "fill":"#F5A400"
+        },400);
     });
+
+    /* ------------------------------------------------------------------------------------------------------------------------
+     * Hover state on the legend (music)
+     */
+     $('.record').on ('mouseenter', function() {
+        second.animate({
+            "fill":"#00abd1"
+        },300);
+        $('.record').css("font-weight","bold");
+        third.animate({
+            "fill":"#404040"
+        },400);
+        forth.animate({
+            "fill":"#404040"
+        },400);
+    });
+    var record_clicked = "false";
+    $('.record').on ('click', function() {
+        if (record_clicked == "false") {
+            record_clicked = "true";
+            second.animate({
+                "fill":"#00abd1"
+            },300);
+            $('.record').css("font-weight","bold");
+            third.animate({
+                "fill":"#404040"
+            },400);
+            forth.animate({
+                "fill":"#404040"
+            },400);
+        } else {
+            record_clicked = "false";
+            second.animate({
+                "fill":"#007E9A"
+            },300);
+            $('.record').css("font-weight","normal");
+            third.animate({
+                "fill":"#F5A400"
+            },400);
+            forth.animate({
+                "fill":"#A9121D"
+            },400);
+        }
+    });
+    $('.record').on ('mouseleave', function() {
+        if (record_clicked == "false") {
+            second.animate({
+                "fill":"#007E9A"
+            },300);
+            $('.record').css("font-weight","normal");
+            third.animate({
+                "fill":"#F5A400"
+            },400);
+            forth.animate({
+                "fill":"#A9121D"
+            },400);
+        }
+    });
+
+    // Live Ticket Sales
+    $('.liveticket').on ('mouseenter', function() {
+        third.animate({
+            "fill":"#ffb520"
+        },300);
+        $('.liveticket').css("font-weight","bold");
+        second.animate({
+            "fill":"#404040"
+        },400);
+        forth.animate({
+            "fill":"#404040"
+        },400);
+    });
+    var liveticket_clicked = "false";
+    $('.liveticket').on ('click', function() {
+        if (liveticket_clicked == "false") {
+            liveticket_clicked = "true";
+                third.animate({
+                "fill":"#ffb520"
+            },300);
+            $('.liveticket').css("font-weight","bold");
+            second.animate({
+                "fill":"#404040"
+            },400);
+            forth.animate({
+                "fill":"#404040"
+            },400);
+        } else {
+            liveticket_clicked = "false";
+            third.animate({
+                "fill":"#F5A400"
+            },300);
+            $('.liveticket').css("font-weight","normal");
+            second.animate({
+                "fill":"#007E9A"
+            },400);
+            forth.animate({
+                "fill":"#A9121D"
+            },400);
+        }
+    });
+    $('.liveticket').on ('mouseleave', function() {
+        if (liveticket_clicked == "false") {
+            third.animate({
+                "fill":"#F5A400"
+            },300);
+            $('.liveticket').css("font-weight","normal");
+            second.animate({
+                "fill":"#007E9A"
+            },400);
+            forth.animate({
+                "fill":"#A9121D"
+            },400);
+        }
+    });
+
+    // Digital Sales
     $('.digital').on ('mouseenter', function() {
         forth.animate({
             "fill":"#dc1726"
         },300);
         $('.digital').css("font-weight","bold");
+        second.animate({
+            "fill":"#404040"
+        },400);
+        third.animate({
+            "fill":"#404040"
+        },400);
+    });
+    var digital_clicked = "false";
+    $('.digital').on ('click', function() {
+        if (digital_clicked == "false") {
+            digital_clicked = "true";
+            forth.animate({
+                "fill":"#dc1726"
+            },300);
+            $('.digital').css("font-weight","bold");
+            second.animate({
+                "fill":"#404040"
+            },400);
+            third.animate({
+                "fill":"#404040"
+            },400);
+        } else {
+            digital_clicked = "false";
+            forth.animate({
+                "fill":"#A9121D"
+            },300);
+            $('.digital').css("font-weight","normal");
+            second.animate({
+                "fill":"#007E9A"
+            },400);
+            third.animate({
+                "fill":"#F5A400"
+            },400);
+        }
     });
     $('.digital').on ('mouseleave', function() {
-        forth.animate({
-            "fill":"#A9121D"
-        },300);
-        $('.digital').css("font-weight","normal");
+        if (digital_clicked == "false") {
+            forth.animate({
+                "fill":"#A9121D"
+            },300);
+            $('.digital').css("font-weight","normal");
+            second.animate({
+                "fill":"#007E9A"
+            },400);
+            third.animate({
+                "fill":"#F5A400"
+            },400);
+        }
     });
-    // remplir le cercle du centre (noir)
+
+    /* ------------------------------------------------------------------------------------------------------------------------
+     * Remplir le cercle noir du centre
+     */
     paper.circle(centerX, centerY, centerRadius)
         .attr({
             fill:"#333",
@@ -308,72 +497,161 @@ function reinit_all(industry) {
         }
         var movieTicketsPath = create_graph(movieTickets, maxValue, radius, centerRadius, centerX, centerY, false),
             dvdVodPath = create_graph(dvdVod, maxValue, radius, centerRadius, centerX, centerY, true);
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Drawing PATHS
+         */
         var mtp = paper.path(dvdVodPath)// dernière
             .attr({
                 "stroke-width":0,
+                "stroke":"none",
                 "fill":"#913402",
                 "fill-opacity":"0"
             })
             .animate({
                 "fill-opacity":"1"
             }, 1000, "ease-in");
-        $(mtp.node).on('mouseenter', function() {
-            mtp.animate({
-                "fill":"#b94203"
-            },300);
-            $('.dvdvod').css("font-weight","bold");
-        });
-        $(mtp.node).on('mouseleave', function() {
-            mtp.animate({
-                "fill":"#913402"
-            },300);
-            $('.dvdvod').css("font-weight","normal");
-        });
-        $('.dvdvod').on ('mouseenter', function() {
-            mtp.animate({
-                "fill":"#b94203"
-            },300);
-            $('.dvdvod').css("font-weight","bold");
-        });
-        $('.dvdvod').on ('mouseleave', function() {
-            mtp.animate({
-                "fill":"#913402"
-            },300);
-            $('.dvdvod').css("font-weight","normal");
-        });
 
         var dvp = paper.path(movieTicketsPath)
             .attr({
                 "stroke-width":0,
+                "stroke":"none",
                 "fill":"#685D47", // green
                 "fill-opacity":"0"
             })
             .animate({
                 "fill-opacity":"1"
             }, 2000, "ease-in");
+
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Hover State on the graph (movies)
+         */
+        // DvD & VOD Sales
+        $(mtp.node).on('mouseenter', function() {
+            mtp.animate({
+                "fill":"#b94203"
+            },300);
+            $('.dvdvod').css("font-weight","bold");
+            dvp.animate({
+                "fill":"#404040"
+            },400);
+        });
+        $(mtp.node).on('mouseleave', function() {
+            mtp.animate({
+                "fill":"#913402"
+            },300);
+            $('.dvdvod').css("font-weight","normal");
+            dvp.animate({
+                "fill":"#685D47"
+            },400);
+        });
+        // Box office
         $(dvp.node).on('mouseenter', function() {
             dvp.animate({
                 "fill":"#b8a57e"
             },300);
             $('.boxoffice').css("font-weight","bold");
+            mtp.animate({
+                "fill":"#404040"
+            },400);
         });
         $(dvp.node).on('mouseleave', function() {
             dvp.animate({
                 "fill":"#685D47"
             },300);
             $('.boxoffice').css("font-weight","normal");
+            mtp.animate({
+                "fill":"#913402"
+            },400);
         });
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Hover state on the legend (movies)
+         */
+        // DvD & VOD Sales
+        $('.dvdvod').on ('mouseenter', function() {
+            mtp.animate({
+                "fill":"#b94203"
+            },300);
+            $('.dvdvod').css("font-weight","bold");
+            dvp.animate({
+                "fill":"#404040"
+            },400);
+        });
+        var dvdvod_clicked = "false";
+        $('.dvdvod').on ('click', function() {
+            if (dvdvod_clicked == "false") {
+                dvdvod_clicked = "true";
+                    mtp.animate({
+                    "fill":"#b94203"
+                },300);
+                $('.dvdvod').css("font-weight","bold");
+                dvp.animate({
+                    "fill":"#404040"
+                },400);
+            } else {
+                dvdvod_clicked = "false";
+                mtp.animate({
+                    "fill":"#913402"
+                },300);
+                $('.dvdvod').css("font-weight","normal");
+                dvp.animate({
+                    "fill":"#685D47"
+                },400);
+            }
+        });
+        $('.dvdvod').on ('mouseleave', function() {
+            if (dvdvod_clicked == "false") {
+                mtp.animate({
+                    "fill":"#913402"
+                },300);
+                $('.dvdvod').css("font-weight","normal");
+                dvp.animate({
+                    "fill":"#685D47"
+                },400);
+            }
+        });
+
+        // Box office
         $('.boxoffice').on ('mouseenter', function() {
             dvp.animate({
                 "fill":"#b8a57e"
             },300);
             $('.boxoffice').css("font-weight","bold");
+            mtp.animate({
+                "fill":"#404040"
+            },400);
+        });
+        var boxoffice_clicked = "false";
+        $('.boxoffice').on ('click', function() {
+            if (boxoffice_clicked == "false") {
+                boxoffice_clicked = "true";
+                dvp.animate({
+                    "fill":"#b8a57e"
+                },300);
+                $('.boxoffice').css("font-weight","bold");
+                mtp.animate({
+                    "fill":"#404040"
+                },400);
+            } else {
+                boxoffice_clicked = "false";
+                dvp.animate({
+                    "fill":"#685D47"
+                },300);
+                $('.boxoffice').css("font-weight","normal");
+                mtp.animate({
+                    "fill":"#913402"
+                },400);
+            }
         });
         $('.boxoffice').on ('mouseleave', function() {
-            dvp.animate({
-                "fill":"#685D47"
-            },300);
-            $('.boxoffice').css("font-weight","normal");
+            if (boxoffice_clicked == "false") {
+                dvp.animate({
+                    "fill":"#685D47"
+                },300);
+                $('.boxoffice').css("font-weight","normal");
+                mtp.animate({
+                    "fill":"#913402"
+                },400);
+            }
         });
 
     $.each(circles, function (i, c) {
@@ -396,73 +674,163 @@ function reinit_all(industry) {
         }
         var gameSalesPath = create_graph(gameSales, maxValue, radius, centerRadius, centerX, centerY, true);
         var gameConsolePath = create_graph(gamesConsole, maxValue, radius, centerRadius, centerX, centerY, false);
-
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Drawing the PATHS
+         */
         var gsp = paper.path(gameSalesPath)
             .attr({
                 "stroke-width":0,
-                "fill":"#f2b807", // green
+                "stroke":"none",
+                "fill":"#f2b807", // yellow
                 "fill-opacity":"0"
             })
             .animate({
                 "fill-opacity":"1"
             }, 1000, "ease-in");
+
+
+        var gcp = paper.path(gameConsolePath)
+            .attr({
+                "stroke-width":0,
+                "stroke":"none",
+                "fill":"#6A2EA6", // purple
+                "fill-opacity":"0"
+            })
+            .animate({
+                "fill-opacity":"1"
+            }, 2000, "ease-in");
+
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Hover state for the graph (games)
+         */
+        // Game Sales
         $(gsp.node).on('mouseenter', function() {
             gsp.animate({
                 "fill":"#fcd04a"
             },300);
             $('.games_legend').css("font-weight","bold");
+            gcp.animate({
+                "fill":"#404040"
+            },400);
         });
         $(gsp.node).on('mouseleave', function() {
             gsp.animate({
                 "fill":"#f2b807"
             },300);
             $('.games_legend').css("font-weight","normal");
+            gcp.animate({
+                "fill":"#6A2EA6"
+            },400);
         });
-        $('.games_legend').on ('mouseenter', function() {
-            gsp.animate({
-                "fill":"#fcd04a"
-            },300);
-            $('.games_legend').css("font-weight","bold");
-        });
-        $('.games_legend').on ('mouseleave', function() {
-            gsp.animate({
-                "fill":"#f2b807"
-            },300);
-            $('.games_legend').css("font-weight","normal");
-        });
-
-        var gcp = paper.path(gameConsolePath)
-            .attr({
-                "stroke-width":0,
-                "fill":"#6A2EA6", // green
-                "fill-opacity":"0"
-            })
-            .animate({
-                "fill-opacity":"1"
-            }, 2000, "ease-in");
+        // Console Game sales
         $(gcp.node).on('mouseenter', function() {
             gcp.animate({
                 "fill":"#923fe4"
             },300);
             $('.consolegames').css("font-weight","bold");
+            gsp.animate({
+                "fill":"#404040"
+            },400);
         });
         $(gcp.node).on('mouseleave', function() {
             gcp.animate({
                 "fill":"#6A2EA6"
             },300);
             $('.consolegames').css("font-weight","normal");
+            gsp.animate({
+                "fill":"#f2b807"
+            },400);
         });
+
+        /* ------------------------------------------------------------------------------------------------------------------------
+         * Hover state for the legens (games)
+         */
+        // Game Sales
+        $('.games_legend').on ('mouseenter', function() {
+            gsp.animate({
+                "fill":"#fcd04a"
+            },300);
+            $('.games_legend').css("font-weight","bold");
+            gcp.animate({
+                "fill":"#404040"
+            },400);
+        });
+        var gamesSales_clicked = "false";
+        $('.games_legend').on ('click', function() {
+            if (gamesSales_clicked == "false") {
+                gamesSales_clicked = "true";
+                    gsp.animate({
+                    "fill":"#fcd04a"
+                },300);
+                $('.games_legend').css("font-weight","bold");
+                gcp.animate({
+                    "fill":"#404040"
+                },400);
+            } else {
+                gamesSales_clicked = "false";
+                gsp.animate({
+                    "fill":"#f2b807"
+                },300);
+                $('.games_legend').css("font-weight","normal");
+                gcp.animate({
+                    "fill":"#6A2EA6"
+                },400);
+            }
+        });
+        $('.games_legend').on ('mouseleave', function() {
+            if (gamesSales_clicked == "false") {
+                gsp.animate({
+                    "fill":"#f2b807"
+                },300);
+                $('.games_legend').css("font-weight","normal");
+                gcp.animate({
+                    "fill":"#6A2EA6"
+                },400);
+            }
+        });
+
+        // Console Game sales
         $('.consolegames').on ('mouseenter', function() {
             gcp.animate({
                 "fill":"#923fe4"
             },300);
             $('.consolegames').css("font-weight","bold");
+            gsp.animate({
+                "fill":"#404040"
+            },400);
+        });
+        var consoleGames_clicked = "false";
+        $('.consolegames').on ('click', function() {
+            if (consoleGames_clicked == "false") {
+                consoleGames_clicked = "true";
+                gcp.animate({
+                    "fill":"#923fe4"
+                },300);
+                $('.consolegames').css("font-weight","bold");
+                gsp.animate({
+                    "fill":"#404040"
+                },400);
+            } else {
+                consoleGames_clicked = "false";
+                gcp.animate({
+                    "fill":"#6A2EA6"
+                },300);
+                $('.consolegames').css("font-weight","normal");
+                gsp.animate({
+                    "fill":"#f2b807"
+                },400);
+            }
         });
         $('.consolegames').on ('mouseleave', function() {
-            gcp.animate({
-                "fill":"#6A2EA6"
-            },300);
-            $('.consolegames').css("font-weight","normal");
+            if (consoleGames_clicked == "false") {
+                gcp.animate({
+                    "fill":"#6A2EA6"
+                },300);
+                $('.consolegames').css("font-weight","normal");
+                gsp.animate({
+                    "fill":"#f2b807"
+                },400);
+            }
         });
 
         $.each(circles, function (i, c) {
@@ -478,23 +846,35 @@ $(document).ready(function() {
         reinit_all(la_classe);
     });
     $('.music').trigger('click');
-    $('#navigation a.music').on('click', function (){
-        // $('#music_lgd').css('display','block');
+    $('#navigation a.music').on('click', function () {
         $('#music_lgd').fadeIn(400);
         $('#movie_lgd').css('display','none');
         $('#games_lgd').css('display','none');
         $('#popup').fadeOut(200);
+        // if (!$($(this)).hasClass('active')) {
+        //     $(this).addClass('active');
+        // } else {
+        //     $(this).removeClass('active');
+        // }
+        // $('#navigation .media').removeClass('active');
+        // $('#navigation .games').removeClass('active');
     });
     $('#navigation a.media').on('click', function (){
         $('#movie_lgd').fadeIn(500);
         $('#games_lgd').css('display','none');
         $('#music_lgd').css('display','none');
         $('#popup').fadeOut(200);
+        // $(this).addClass('active');
+        // $('#navigation .music').removeClass('active');
+        // $('#navigation .games').removeClass('active');
     });
     $('#navigation a.games').on('click', function (){
         $('#movie_lgd').css('display','none');
         $('#music_lgd').css('display','none');
         $('#games_lgd').fadeIn(500);
         $('#popup').fadeOut(200);
+        // $(this).addClass('active');
+        // $('#navigation .media').removeClass('active');
+        // $('#navigation .music').removeClass('active');
     });
 });
